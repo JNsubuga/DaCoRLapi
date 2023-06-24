@@ -15,7 +15,7 @@ export default function Users() {
     }, [])
 
     const handleDelete = async (user) => {
-        if (!window.confirm('Are you sure you want to delete this User!!!')) {
+        if (!window.confirm('Are you sure you want to delete this User?')) {
             return
         }
         try {
@@ -33,9 +33,9 @@ export default function Users() {
         }
     }
 
-    const getUsers = (() => {
+    const getUsers = (async () => {
         setLoading(true)
-        axiosClient.get('/users')
+        await axiosClient.get('/users')
             .then(({ data }) => {
                 setLoading(false)
                 setUsers(data.data)

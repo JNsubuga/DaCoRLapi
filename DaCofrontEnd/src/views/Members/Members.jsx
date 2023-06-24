@@ -10,11 +10,11 @@ export default function Members() {
     const [members, setMembers] = useState([])
     const [loading, setLoading] = useState(false)
     const { setNotification } = useStateContext()
+
     useEffect(() => {
         getMembers()
     }, [])
 
-    // TODO add delete function
     const handleDelete = async (member) => {
         if (!window.confirm('Are you sure you want to delete this Account?')) {
             return
@@ -25,15 +25,16 @@ export default function Members() {
                     setNotification("Account was successfully Deleted!!")
                     getMembers()
                 })
-                .catch(() => {
-
+                .catch((err) => {
+                    const response = err.response
+                    console.log(response)
                 })
         } catch (error) {
             console.log(error)
         }
     }
 
-    const getMembers = async () => {
+    const getMembers = (async () => {
         setLoading(true)
         await axiosClient.get('/members')
             .then(({ data }) => {
@@ -43,7 +44,7 @@ export default function Members() {
             .catch(() => {
                 setLoading(false)
             })
-    }
+    })
     return (
         <PageComponent
             heading="Members"
