@@ -25,31 +25,45 @@ class AccountController extends Controller
      */
     public function store(StoreAccountRequest $request)
     {
-        //
+        $data = $request->validated();
+        $account = Account::create($data);
+        return response(new AccountResource($account), 201);
     }
 
     /**
      * Display the specified resource.
+     * @param int $id
      */
-    public function show(Account $account)
+    // public function show(Account $account)
+    public function show($id)
     {
-        //
+        $account = Account::where('id', $id)->first();
+        return new AccountResource($account);
     }
 
     /**
      * Update the specified resource in storage.
+     * @param int $id
      */
-    public function update(UpdateAccountRequest $request, Account $account)
+    // public function update(UpdateAccountRequest $request, Account $account)
+    public function update(UpdateAccountRequest $request, $id)
     {
-        //
+
+        $data = $request->validated();
+        $account = Account::where('id', $id)->update($data);
+
+        return new AccountResource($account);
     }
 
     /**
      * Remove the specified resource from storage.
+     * @param int $id
      */
-    public function destroy(Account $account)
+    // public function destroy(Account $account)
+    public function destroy($id)
     {
-        $account->delete();
-        return response("", 204);
+        // $account->delete();
+        Account::destroy($id);
+        return response("Account was Deleted successfully!!", 204);
     }
 }

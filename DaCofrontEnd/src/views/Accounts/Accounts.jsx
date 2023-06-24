@@ -5,6 +5,7 @@ import PageComponent from "../../Components/Core/PageComponent"
 import TButton from "../../Components/Core/TButton"
 import { PencilIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { Link } from "react-router-dom"
+import { NumericFormat } from "react-number-format"
 
 export default function Accounts() {
     const [accounts, setAccounts] = useState([])
@@ -34,6 +35,7 @@ export default function Accounts() {
         try {
             await axiosClient.delete(`/accounts/${account.id}`)
                 .then(() => {
+                    //     console.log(data)
                     setNotification("Account was successfully Deleted!!")
                     getAccounts()
                 })
@@ -50,7 +52,7 @@ export default function Accounts() {
         <PageComponent
             heading="Accounts"
             buttonz={(
-                <TButton color="green" to="/acounts/create">
+                <TButton color="green" to="/accounts/create">
                     <PlusCircleIcon className="h-6 w-6 mr-1" />
                     New Account
                 </TButton>
@@ -75,7 +77,7 @@ export default function Accounts() {
                             </td>
                             <td className="py-0 px-6 text-right">{account.year}</td>
                             <td className="py-0 px-6 text-left">{account.Code}</td>
-                            <td className="py-0 px-6 text-right">{Number(account.AnualPrinciple, 2)}</td>
+                            <td className="py-0 px-6 text-right">{account.AnualPrinciple}</td>
                             <td className="flex items-center justify-center">
                                 <TButton color="orange" to={'/accounts/' + account.id + '/edit'}>
                                     <PencilIcon className="h-6 w-6 mr-1" />

@@ -28,7 +28,7 @@ export default function MemberForm() {
                 .then(({ data }) => {
                     setLoading(false)
                     // console.log(data.data)
-                    setMember(data.data)
+                    setMember(data)
                 })
                 .catch(() => {
                     setLoading(false)

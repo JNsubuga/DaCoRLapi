@@ -34,7 +34,7 @@ class MemberController extends Controller
 
     /**
      * Display the specified resource.
-     * 
+     * @param int $id
      * @param \App\Models\Member $member
      * @return \Illuminate\Http\Response
      * 
@@ -45,7 +45,12 @@ class MemberController extends Controller
         $member = Member::where('id', $id)->first();
         return new MemberResource($member);
     }
-
+    /**
+     * Undocumented function
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
     public function memberAccounts($id)
     {
         $memberAccounts = Member::where('members.id', $id)
@@ -69,21 +74,18 @@ class MemberController extends Controller
     public function update(UpdateMemberRequest $request, $id)
     {
         $data = $request->validated();
-        // if (isset($data['password'])) {
-        //     $data['password'] = bcrypt($data['password']);
-        // }
-
         // $member->update($data);
-
-        // return new MemberResource($member);
         return response(new MemberResource(Member::where('id', $id)->update($data)), 202);
     }
 
     /**
      * Remove the specified resource from storage.
+     * @param int $id
      */
-    public function destroy(Member $member)
+    // public function destroy(Member $member)
+    public function destroy($id)
     {
-        //
+        Member::destroy($id);
+        return response("", 204);
     }
 }

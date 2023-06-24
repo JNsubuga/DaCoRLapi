@@ -1,7 +1,12 @@
-import React from 'react'
+import PageComponent from "../../Components/Core/PageComponent";
 
 export default function Transactions() {
     return (
-        <div>Transactions</div>
+        <PageComponent
+            heading="Transactions"
+        >
+            <div>Transactions</div>
+        </PageComponent>
+
     )
 }
