@@ -9,6 +9,8 @@ class Event extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['Event'];
+
     public function transactions()
     {
         return $this->hasMany(Transaction::class);

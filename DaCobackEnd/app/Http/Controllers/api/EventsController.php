@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreEventRequest;
 use App\Http\Requests\UpdateEventRequest;
+use App\Http\Resources\EventResource;
 use App\Models\Event;
 
 class EventsController extends Controller
@@ -13,7 +14,9 @@ class EventsController extends Controller
      */
     public function index()
     {
-        //
+        return EventResource::collection(
+            Event::query()->orderBy('Event', 'asc')->get()
+        );
     }
 
     /**

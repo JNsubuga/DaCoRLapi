@@ -48,6 +48,12 @@ export default function Accounts() {
             console.log(response)
         }
     }
+
+    const formater = new Intl.NumberFormat('en', {
+        style: 'currency',
+        currency: 'UGX'
+    })
+
     return (
         <PageComponent
             heading="Accounts"
@@ -77,7 +83,7 @@ export default function Accounts() {
                             </td>
                             <td className="py-0 px-6 text-right">{account.year}</td>
                             <td className="py-0 px-6 text-left">{account.Code}</td>
-                            <td className="py-0 px-6 text-right">{account.AnualPrinciple}</td>
+                            <td className="py-0 px-6 text-right">{formater.format(account.AnualPrinciple)}</td>
                             <td className="flex items-center justify-center">
                                 <TButton color="orange" to={'/accounts/' + account.id + '/edit'}>
                                     <PencilIcon className="h-6 w-6 mr-1" />

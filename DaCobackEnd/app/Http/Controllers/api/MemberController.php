@@ -74,7 +74,6 @@ class MemberController extends Controller
     public function update(UpdateMemberRequest $request, $id)
     {
         $data = $request->validated();
-        // $member->update($data);
         return response(new MemberResource(Member::where('id', $id)->update($data)), 202);
     }
 

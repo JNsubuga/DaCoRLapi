@@ -124,7 +124,6 @@ export default function UserForm() {
                             Update Record
                         </TButton>
                     }
-
                 </form>
             }
         </PageComponent >

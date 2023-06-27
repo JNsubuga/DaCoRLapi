@@ -27,7 +27,6 @@ export default function MemberForm() {
             axiosClient.get(`/members/${id}`)
                 .then(({ data }) => {
                     setLoading(false)
-                    // console.log(data.data)
                     setMember(data)
                 })
                 .catch(() => {
@@ -39,13 +38,11 @@ export default function MemberForm() {
     const handleSubmit = async (ev) => {
         ev.preventDefault()
         if (member.id) {
-            // console.log(member.id)
             try {
                 await axiosClient.put(`/members/${member.id}`, member)
-                    .then(({ data }) => {
-                        console.log(data.data)
-                        // setNotification("Member was successfully Updated!!")
-                        // navigate('/members')
+                    .then(() => {
+                        setNotification("Member was successfully Updated!!")
+                        navigate('/members')
                     })
                     .catch((err) => {
                         const response = err.response
@@ -53,8 +50,8 @@ export default function MemberForm() {
                             setErrors(response.data.errors)
                         }
                     })
-            } catch (response) {
-                console.log(response)
+            } catch (err) {
+                console.log(err.response)
             }
 
         } else {

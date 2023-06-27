@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreGenderRequest;
 use App\Http\Requests\UpdateGenderRequest;
+use App\Http\Resources\GenderResource;
 use App\Models\Gender;
 
 class GendersController extends Controller
@@ -13,7 +14,9 @@ class GendersController extends Controller
      */
     public function index()
     {
-        //
+        return GenderResource::collection(
+            Gender::query()->orderBy('Gender', 'asc')
+        );
     }
 
     /**

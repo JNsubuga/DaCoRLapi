@@ -5,6 +5,8 @@ use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\MemberController;
 use App\Http\Controllers\api\TransactionController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\EventsController;
+use App\Http\Controllers\api\GendersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::post('/logout', [AuthController::class, 'logout']);
-    //
-    // Route::resource('/users', UserController::class);
     Route::apiResource('/users', UserController::class);
 
     Route::prefix('/accounts')->group(function () {
@@ -59,6 +59,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{id}', [TransactionController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('/{id}', [TransactionController::class, 'destroy'])->where('id', '[0-9]+');
     });
+
+    Route::get('/events', [EventsController::class, 'index']);
+    // Route::apiResource('/events', EventsController::class);
+    Route::get('/genders', [GendersController::class, 'index']);
 });
 
 Route::post('/signup', [AuthController::class, 'signup']);
