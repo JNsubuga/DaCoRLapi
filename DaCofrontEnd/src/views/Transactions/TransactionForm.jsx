@@ -11,7 +11,8 @@ export default function TransactionForm() {
     const navigate = useNavigate()
 
     const [events, setEvents] = useState([])
-    // const [errors, setErrors] = useState(null)
+    // const [errors, setErrors] = useState([])
+    const [errors, setErrors] = useState(null)
     const [members, setMembers] = useState([])
     const [accounts, setAccounts] = useState([])
     const [loading, setLoading] = useState(false)
@@ -42,7 +43,7 @@ export default function TransactionForm() {
     const getEvents = (() => {
         axiosClient.get('/events')
             .then(({ data }) => {
-                console.log(data.data)
+                // console.log(data.data)
                 setEvents(data.data)
             })
             .catch(() => { })
@@ -82,10 +83,11 @@ export default function TransactionForm() {
                 console.log(err.response)
             }
         } else {
+            // debugger
             await axiosClient.post('/transactions', transaction)
                 .then(() => {
-                    setNotification("Trnsaction was successfully Stored!!")
-                    navigate('/transaction')
+                    setNotification("Transaction was successfully Stored!!")
+                    navigate('/transactions')
                 })
                 .catch((err) => {
                     const response = err.response
@@ -108,13 +110,13 @@ export default function TransactionForm() {
                     Transaction
                 </TButton>
             }>
-            {/* {errors &&
+            {errors &&
                 <div>
                     {Object.keys(errors).map(key => (
                         <p key={key}>{errors[key][0]}</p>
                     ))}
                 </div>
-            } */}
+            }
 
             {loading && (
                 <div>Loading ...</div>
@@ -241,20 +243,21 @@ export default function TransactionForm() {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-end mt-4">
+                    {/* <div className="flex items-center justify-between mt-4">
                         <button className="ml-3 bg-gray-600 hover:bg-gray-500" type="reset">
                             Cancel
-                        </button>
-                        {!transaction.id == true ?
-                            <TButton color="green">
-                                Store Record
-                            </TButton> :
-                            <TButton color="green">
-                                Update Record
-                            </TButton>
-                        }
-                        <TButton color="green">Store Record</TButton>
-                    </div>
+                        </button> */}
+                    {transaction.id == null ?
+
+                        <TButton color="green">
+                            Store Record
+                        </TButton> :
+                        <TButton color="green">
+                            Update Record
+                        </TButton>
+                    }
+                    {/*<TButton color="green">Store Record</TButton>
+                     </div> */}
                 </form>
             }
         </PageComponent>

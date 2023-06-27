@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
+use App\Models\Gender;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\GenderResource;
 use App\Http\Requests\StoreGenderRequest;
 use App\Http\Requests\UpdateGenderRequest;
-use App\Http\Resources\GenderResource;
-use App\Models\Gender;
 
 class GendersController extends Controller
 {
