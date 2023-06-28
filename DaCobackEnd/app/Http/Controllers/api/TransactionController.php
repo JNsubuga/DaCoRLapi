@@ -24,64 +24,59 @@ class TransactionController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreTransactionRequest $request)
     {
         $data = $request->validated();
-        dd($data);
-        switch ($data->event_id) {
-            case 1:
-                $selectedMember = Member::where('id', $data['member_id'])->first();
+        return response(new TransactionResource($data));
+        // switch ($data->event_id) {
+        //     case 1:
+        //         $selectedMember = Member::where('id', $data['member_id'])->first();
 
-                $Dr = $data['amount'];
-                $Cr = 0;
-                $balanceBefore = $selectedMember['currentBalance'];
-                $balanceAfter = $selectedMember['currentBalance'] + $data['amount'];
+        //         $Dr = $data['amount'];
+        //         $Cr = 0;
+        //         $balanceBefore = $selectedMember['currentBalance'];
+        //         $balanceAfter = $selectedMember['currentBalance'] + $data['amount'];
 
-                $memberAccountIds = [$selectedMember['id'], $data['account_id']];
-                // dd($memberAccountIds[0] . '-' . $memberAccountIds[1]);
-                DB::table('member_account')->insert([
-                    'member_id' => $memberAccountIds[0],
-                    'account_id' => $memberAccountIds[1]
-                ]);
+        //         $memberAccountIds = [$selectedMember['id'], $data['account_id']];
+        //         DB::table('member_account')->insert([
+        //             'member_id' => $memberAccountIds[0],
+        //             'account_id' => $memberAccountIds[1]
+        //         ]);
 
-                $transaction = Transaction::create([
-                    'txnDate' => $data['txnDate'],
-                    'account_id' => $data['account_id'],
-                    'event_id' => $data['event_id'],
-                    'member_id' => $data['member_id'],
-                    'Dr' => $Dr,
-                    'Cr' => $Cr,
-                    'balanceBefore' => $balanceBefore
-                ]);
+        //         $transaction = Transaction::create([
+        //             'txnDate' => $data['txnDate'],
+        //             'account_id' => $data['account_id'],
+        //             'event_id' => $data['event_id'],
+        //             'member_id' => $data['member_id'],
+        //             'Dr' => $Dr,
+        //             'Cr' => $Cr,
+        //             'balanceBefore' => $balanceBefore
+        //         ]);
 
-                Member::where('id', $selectedMember['id'])->update([
-                    'Names' => $selectedMember['Names'],
-                    'Code' => $selectedMember['Code'],
-                    'Contacts' => $selectedMember['Contacts'],
-                    'currentBalance' => $balanceAfter
-                ]);
-                return response(new TransactionResource($transaction), 201);
-                // return redirect(route('transaction.index'))->with('success', 'Transaction Recorded Successfully!!');
-                break;
-            case 2:
-                $Dr = 0;
-                $Cr = $request->amount;
-                break;
+        //         Member::where('id', $selectedMember['id'])->update([
+        //             'Names' => $selectedMember['Names'],
+        //             'Code' => $selectedMember['Code'],
+        //             'Contacts' => $selectedMember['Contacts'],
+        //             'currentBalance' => $balanceAfter
+        //         ]);
+        //         return response(new TransactionResource($transaction), 201);
+        //         break;
+        //     case 2:
+        //         $Dr = 0;
+        //         $Cr = $request->amount;
+        //         break;
 
-            default:
-                return back()->with('error', 'Event Not Selected!!!');
-
-                // $data = $request->validated();
-                // $account = Transaction::create($data);
-                // return response(new TransactionResource($account), 201);
-        }
+        //     default:
+        //         return back()->with('error', 'Event Not Selected!!!');
+        // }
     }
 
     /**
      * Display the specified resource.
      * @param int $id
-     * @return re
+     * @return \Illuminate\Http\Response
      */
     // public function show(Transaction $transaction)
     public function show($id)
@@ -91,14 +86,19 @@ class TransactionController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTransactionRequest $request, Transaction $transaction)
+    // public function update(UpdateTransactionRequest $request, Transaction $transaction)
+    public function update(UpdateTransactionRequest $request, $id)
     {
         //
     }
 
     /**
      * Remove the specified resource from storage.
+     * @param int $id
+     * @return \Illuminate\Http\Response
      */
     public function destroy(Transaction $transaction)
     {

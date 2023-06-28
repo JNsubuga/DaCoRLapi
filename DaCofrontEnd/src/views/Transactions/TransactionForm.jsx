@@ -71,31 +71,31 @@ export default function TransactionForm() {
     }
 
     const handleSubmit = async (ev) => {
-        ev.preventDefalut()
-        if (transaction.id) {
-            try {
-                await axiosClient.put(`/transactions/${transaction.id}`, transaction)
-                    .then(() => {
-                        setNotification("Transaction was successfully updated!!")
-                        navigate('/transactions')
-                    })
-            } catch (err) {
-                console.log(err.response)
-            }
-        } else {
-            // debugger
-            await axiosClient.post('/transactions', transaction)
-                .then(() => {
-                    setNotification("Transaction was successfully Stored!!")
-                    navigate('/transactions')
-                })
-                .catch((err) => {
-                    const response = err.response
-                    if (response && response.status === 422) {
-                        setErrors(response.data.errors)
-                    }
-                })
-        }
+        ev.preventDefault()
+        // if (transaction.id) {
+        //     try {
+        //         await axiosClient.put(`/transactions/${transaction.id}`, transaction)
+        //             .then(() => {
+        //                 setNotification("Transaction was successfully updated!!")
+        //                 navigate('/transactions')
+        //             })
+        //     } catch (err) {
+        //         console.log(err.response)
+        //     }
+        // } else {
+        //     await axiosClient.post('/transactions', transaction)
+        //         .then(() => {
+        //             setNotification("Transaction was successfully Stored!!")
+        //             navigate('/transactions')
+        //         })
+        //         .catch((err) => {
+        //             const response = err.response
+        //             if (response && response.status === 422) {
+        //                 setErrors(response.data.errors)
+        //             }
+        //         })
+        // }
+        console.log(transaction)
     }
 
     return (
