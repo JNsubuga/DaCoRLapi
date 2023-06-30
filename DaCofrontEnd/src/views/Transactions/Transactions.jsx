@@ -6,6 +6,7 @@ import axiosClient from "../../axiosClient";
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState([]);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         getTransactions()
@@ -18,13 +19,16 @@ export default function Transactions() {
     })
 
     const getTransactions = (async () => {
+        setLoading(true)
         try {
             await axiosClient.get('/transactions')
                 .then(({ data }) => {
-                    console.log(data.data)
+                    setLoading(false)
                     setTransactions(data.data)
                 })
-                .catch((err) => { })
+                .catch(() => {
+                    setLoading(false)
+                })
         } catch (err) {
 
         }
@@ -45,49 +49,51 @@ export default function Transactions() {
                 </TButton>}
         >
             <div>
-                <table>
+                <table className="w-full">
                     <thead>
-                        <tr className="border-b-4 border-gray-400 font-bold capitalize">
+                        <tr className="border-b-2 border-gray-400 font-bold capitalize">
                             <th className="py-1 px-6 text-left">Date</th>
                             <th className="py-1 px-6 text-left">Folio</th>
                             <th className="py-1 px-6 text-right">Dr</th>
                             <th className="py-1 px-6 text-right">Cr</th>
-                            <th className="py-1 px-6">Action</th>
+                            {/* <th className="py-1 px-6">Action</th> */}
                         </tr>
                     </thead>
-
-                    {/* @php
-                $sNo = 0;
-                // dd($transactions);
-            @endphp
-            @forelse ($transactions as $transaction)
-            @php
-                $sNo = ++$sNo;
-            @endphp */}
-                    {transactions &&
-                        transactions.map(transaction => (<tbody>
-                            <tr className="border-b-2 border-gray-300" key={transaction.id}>
-                                <td className="py-0 px-6">{transaction.txnDate}</td>
-                                <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
-
-                                <td className="py-0 px-6 text-right">{formater.format(transaction.Dr)}</td>
-                                <td className="py-0 px-6 text-right">{formater.format(transaction.Cr)}</td>
-                                <td className="py-0 grid grid-cols-2">
-
-                                    <TButton color="orange" to={'/transactions/' + transaction.id + '/edit'}>
-                                        <PencilIcon className="h-6 w-6 mr-1" />
-                                        Edit
-                                    </TButton>
-                                    <TButton color="red" onClick={(ev) => handleDelete(transaction)}>
-                                        <TrashIcon className="h-6 w-6 mx-auto" />
-                                    </TButton>
+                    {loading &&
+                        <tbody>
+                            <tr>
+                                <td colSpan="5" className="text-center">
+                                    Loading ...
                                 </td>
-                            </tr >
-                        </tbody>))
+                            </tr>
+                        </tbody>}
+                    {!loading &&
+                        <tbody>
+                            {transactions &&
+                                transactions.map(transaction => (
+                                    <tr className="border-b-2 border-gray-300" key={transaction.id}>
+                                        <td className="py-0 px-6">{transaction.txnDate}</td>
+                                        <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
+
+                                        <td className="py-0 px-6 text-right">{formater.format(transaction.Dr)}</td>
+                                        <td className="py-0 px-6 text-right">{formater.format(transaction.Cr)}</td>
+                                        {/* <td className="flex items-center justify-center">
+                                            <TButton color="orange" to={'/transactions/' + transaction.id + '/edit'}>
+                                                <PencilIcon className="h-6 w-6 mr-1" />
+                                                Edit
+                                            </TButton>
+                                            <TButton color="red" onClick={(ev) => handleDelete(transaction)}>
+                                                <TrashIcon className="h-6 w-6 mx-auto" />
+                                            </TButton>
+                                        </td> */}
+                                    </tr >
+                                ))
+                            }
+                        </tbody>
                     }
                     {!transactions &&
                         <tbody>
-                            < tr ><td colspan="5" className="text-red-500">No record in the database!!!</td></tr >
+                            < tr ><td colspan="5" className="text-red-500 text-center">No record in the database!!!</td></tr >
                         </tbody>
                     }
                 </table >

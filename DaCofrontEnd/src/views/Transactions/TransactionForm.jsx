@@ -102,7 +102,7 @@ export default function TransactionForm() {
     return (
         <PageComponent
             heading={
-                !transaction.id == true ?
+                !transaction.id == null ?
                     <div>New Transaction</div> :
                     <div>Update Transaction</div>
             }
@@ -124,8 +124,6 @@ export default function TransactionForm() {
             )}
 
             {!loading &&
-
-
                 <form onSubmit={handleSubmit} className="max-w-xl mx-auto items-center justify-between">
                     {/* txnDate  */}
                     <div className="md:flex md:items-center mb-6">

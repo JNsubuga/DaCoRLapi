@@ -16,16 +16,22 @@ export default function MemberAcounts() {
     const getMemberAccounts = async () => {
         await axiosClient.get(`/members/memberAccounts/${id}`)
             .then(({ data }) => {
-                console.log(data.data)
-                // setMemberAccounts(data.data)
-                // setLoading(false)
+                // console.log(data.data)
+                setMemberAccounts(data.data)
+                setLoading(false)
             })
             .catch((err) => {
-                console.log(err.response)
+                console.log(err)
                 setLoading(false)
             })
 
     }
+
+    const formater = new Intl.NumberFormat('en', {
+        style: 'currency',
+        currency: 'UGX'
+    })
+
     return (
         <PageComponent
             heading="Members Accounts"
@@ -56,15 +62,15 @@ export default function MemberAcounts() {
                             </tr>
                         </thead>
                         <tbody>
-                            {memberAccounts.map(account => (
-                                <tr className="border-b-2 border-gray-300">
+                            {memberAccounts && memberAccounts.map(account => (
+                                <tr className="border-b-2 border-gray-300" key={account.accountId}>
                                     <td className="py-0 px-6 text-left">
-                                        <Link to={`members/${account.member_id}/${account.account_id}`}>{account.Name}</Link>
+                                        <Link to={`members/${account.memberId}/${account.accountId}`}>{account.accountName}</Link>
                                     </td>
-                                    <td className="py-0 px-6 text-left">{'F' + account.year + '-' + account.member_Code + '-' + account.Code}</td>
-                                    <td className="py-0 px-6 text-right">{account.AnualPrinciple}</td>
-                                    <td className="py-0 px-6 text-right">{account.totalAmountPaid}</td>
-                                    <td className="py-0 px-6 text-right">{account.AnualPrinciple - account.totalAmountPaid}</td>
+                                    <td className="py-0 px-6 text-left">{'F' + account.accountOpeningYear + '-' + account.memberCode + '-' + account.accountCode}</td>
+                                    <td className="py-0 px-6 text-right">{formater.format(account.accountAnualPrinciple)}</td>
+                                    <td className="py-0 px-6 text-right">{formater.format(account.totalAmountPaid)}</td>
+                                    <td className="py-0 px-6 text-right">{formater.format(account.accountAnualPrinciple - account.totalAmountPaid)}</td>
                                 </tr>
                             ))}
                         </tbody>

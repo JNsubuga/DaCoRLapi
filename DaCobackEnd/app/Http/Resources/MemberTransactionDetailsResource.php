@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class MemberAccountsResource extends JsonResource
+class MemberTransactionDetailsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,9 @@ class MemberAccountsResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'accountId' => $this->accountId,
+            'txnDate' => $this->txnDate,
+            'txnId' => $this->txnId,
+            // 'accountId' => $this->accountId,
             'accountName' => $this->accountName,
             'accountOpeningYear' => $this->accountOpeningYear,
             'accountCode' => $this->accountCode,
@@ -24,16 +26,8 @@ class MemberAccountsResource extends JsonResource
             'memberId' => $this->memberId,
             'member' => $this->member,
             'memberCode' => $this->memberCode,
-            'totalAmountPaid' => $this->totalAmountPaid
-
-
-            // 'member' => $this->member,
-            // 'AnualPrinciple' => $this->AnualPrinciple,
-            // 'totalAmountPaid' => $this->totalAmountPaid,
-            // 'Name' => $this->Name,
-            // 'accountOpeningYear' => $this->year,
-            // 'memberCode' => $this->member_Code,
-            // 'accountCode' => $this->Code
+            'Dr' => $this->Dr,
+            'Cr' => $this->Cr
         ];
     }
 }

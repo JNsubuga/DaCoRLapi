@@ -7,6 +7,7 @@ use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
 use App\Http\Resources\MemberAccountsResource;
 use App\Http\Resources\MemberResource;
+use App\Http\Resources\MemberTransactionDetailsResource;
 use App\Models\Member;
 
 class MemberController extends Controller
@@ -47,6 +48,23 @@ class MemberController extends Controller
         return new MemberResource($member);
     }
     /**
+     * Display the specified resource.
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     * 
+     */
+    // public function memberTransactionDetails(Member $member)
+    public function memberTransactionDetails($id)
+    {
+        $memberTransactionDetails = Member::where('members.id', $id)
+            ->leftJoin('transactions', 'members.id', '=', 'transactions.member_id')
+            ->join('accounts', 'accounts.id', '=', 'transactions.account_id')
+            ->selectRaw('accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode,  transactions.txnDate as txnDate, transactions.id as txnId, transactions.Dr as Dr, transactions.Cr as Cr')
+            ->orderBy('txnDate', 'ASC')
+            ->get();
+        return MemberTransactionDetailsResource::collection($memberTransactionDetails);
+    }
+    /**
      * Undocumented function
      *
      * @param int $id
@@ -57,11 +75,11 @@ class MemberController extends Controller
         $memberAccounts = Member::where('members.id', $id)
             ->leftJoin('transactions', 'members.id', '=', 'transactions.member_id')
             ->join('accounts', 'accounts.id', '=', 'transactions.account_id')
-            ->selectRaw('accounts.id as account_id, accounts.Name, accounts.year, accounts.Code, accounts.AnualPrinciple, members.id as member_id, members.Names as member, members.Code as member_Code, SUM(transactions.Dr) as totalAmountPaid')
+            ->selectRaw('accounts.id as accountId, accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode, SUM(transactions.Dr) as totalAmountPaid')
             ->groupBy(['account_id', 'accounts.Name', 'members.id'])
             ->orderBy('account_id', 'ASC')
             ->get();
-        return response(new MemberAccountsResource($memberAccounts), 200);
+        return MemberAccountsResource::collection($memberAccounts);
     }
 
     /**
