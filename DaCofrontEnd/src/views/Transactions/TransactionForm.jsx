@@ -72,30 +72,31 @@ export default function TransactionForm() {
 
     const handleSubmit = async (ev) => {
         ev.preventDefault()
-        // if (transaction.id) {
-        //     try {
-        //         await axiosClient.put(`/transactions/${transaction.id}`, transaction)
-        //             .then(() => {
-        //                 setNotification("Transaction was successfully updated!!")
-        //                 navigate('/transactions')
-        //             })
-        //     } catch (err) {
-        //         console.log(err.response)
-        //     }
-        // } else {
-        //     await axiosClient.post('/transactions', transaction)
-        //         .then(() => {
-        //             setNotification("Transaction was successfully Stored!!")
-        //             navigate('/transactions')
-        //         })
-        //         .catch((err) => {
-        //             const response = err.response
-        //             if (response && response.status === 422) {
-        //                 setErrors(response.data.errors)
-        //             }
-        //         })
-        // }
-        console.log(transaction)
+        if (transaction.id) {
+            try {
+                await axiosClient.put(`/transactions/${transaction.id}`, transaction)
+                    .then(() => {
+                        setNotification("Transaction was successfully updated!!")
+                        navigate('/transactions')
+                    })
+            } catch (err) {
+                console.log(err.response)
+            }
+        } else {
+            await axiosClient.post('/transactions', transaction)
+                .then(({ data }) => {
+                    console.log(data)
+                    setNotification("Transaction was successfully Stored!!")
+                    navigate('/transactions')
+                })
+                .catch((err) => {
+                    const response = err.response
+                    if (response && response.status === 422) {
+                        setErrors(response.data.errors)
+                    }
+                })
+        }
+        // console.log(transaction)
     }
 
     return (
@@ -125,13 +126,15 @@ export default function TransactionForm() {
             {!loading &&
 
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className="max-w-xl mx-auto items-center justify-between">
                     {/* txnDate  */}
                     <div className="md:flex md:items-center mb-6">
                         <div className="md:w-1/3 my-0 py-0">
+                            {/* <div> */}
                             <label htmlFor="txnDate" className="mr-4 mt-4 text-lg">Date</label>
                         </div>
                         <div className="md:w-2/3 my-0 py-0">
+                            {/* <div> */}
                             <input
                                 id="txnDate"
                                 type="date"
@@ -156,6 +159,7 @@ export default function TransactionForm() {
                             <select
                                 name="event_id"
                                 id="event_id"
+                                onChange={(ev) => setTransaction({ ...transaction, event_id: ev.target.value })}
                                 className="block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
                             >
                                 <option defaultValue={""}>--Select Event--</option>
@@ -163,7 +167,7 @@ export default function TransactionForm() {
                                     <option
                                         value={selectItem.id}
                                         key={selectItem.id}
-                                        onChange={(ev) => setTransaction({ ...transaction, event_id: ev.target.value })}
+
                                     >{selectItem.Event}</option>
                                 ))}
                             </select>
@@ -182,6 +186,7 @@ export default function TransactionForm() {
                             <select
                                 name="member_id"
                                 id="member_id"
+                                onChange={(ev) => setTransaction({ ...transaction, member_id: ev.target.value })}
                                 className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
                             >
                                 <option defaultValue={""}>--Select Member--</option>
@@ -189,7 +194,6 @@ export default function TransactionForm() {
                                     <option
                                         value={selectItem.id}
                                         key={selectItem.id}
-                                        onChange={(ev) => setTransaction({ ...transaction, member_id: ev.target.value })}
                                     >{selectItem.Names}</option>
                                 ))}
                             </select>
@@ -208,6 +212,7 @@ export default function TransactionForm() {
                             <select
                                 name="account_id"
                                 id="account_id"
+                                onChange={(ev) => setTransaction({ ...transaction, account_id: ev.target.value })}
                                 className="block w-full rounded-md border-0 py-1.5 px-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
                             >
                                 <option defaultValue={""}>--Select Account--</option>
@@ -215,7 +220,6 @@ export default function TransactionForm() {
                                     <option
                                         value={selectItem.id}
                                         key={selectItem.id}
-                                        onChange={(ev) => setTransaction({ ...transaction, account_id: ev.target.value })}
                                     >{selectItem.year + '-' + selectItem.Code}</option>
                                 ))}
                             </select>
@@ -235,6 +239,7 @@ export default function TransactionForm() {
                                 id="amount"
                                 type="number"
                                 name="amount"
+                                onChange={(ev) => setTransaction({ ...transaction, amount: ev.target.value })}
                                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
                             />
                             {/* @error('amount')

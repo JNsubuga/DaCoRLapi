@@ -74,7 +74,7 @@ export default function Accounts() {
                     </tr>
                 </thead>
                 <tbody>
-                    {accounts.map(account => (
+                    {accounts && accounts.map(account => (
                         <tr className="border-b-2 border-gray-300" key={account.id}>
                             <td className="py-0 px-6">
                                 <Link to={`/acccount/${account.id}`}>
@@ -95,6 +95,11 @@ export default function Accounts() {
                             </td>
                         </tr>
                     ))}
+                    {!accounts &&
+                        <tbody>
+                            < tr ><td colspan="5" className="text-red-500">No record in the database!!!</td></tr >
+                        </tbody>
+                    }
                 </tbody>
             </table>
         </PageComponent>

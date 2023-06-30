@@ -18,7 +18,7 @@ class TransactionController extends Controller
     public function index()
     {
         return TransactionResource::collection(
-            Transaction::query()->orderBy('created_at', 'desc')->paginate(50)
+            Transaction::query()->orderBy('txnDate', 'desc')->paginate(50)
         );
     }
 
@@ -29,48 +29,49 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request)
     {
         $data = $request->validated();
-        return response(new TransactionResource($data));
-        // switch ($data->event_id) {
-        //     case 1:
-        //         $selectedMember = Member::where('id', $data['member_id'])->first();
+        // return response($data['event_id']);
+        // return response(new TransactionResource($data['event_id']));
+        switch ($data['event_id']) {
+            case 1:
+                $selectedMember = Member::where('id', $data['member_id'])->first();
 
-        //         $Dr = $data['amount'];
-        //         $Cr = 0;
-        //         $balanceBefore = $selectedMember['currentBalance'];
-        //         $balanceAfter = $selectedMember['currentBalance'] + $data['amount'];
+                $Dr = $data['amount'];
+                $Cr = 0;
+                $balanceBefore = $selectedMember['currentBalance'];
+                $balanceAfter = $selectedMember['currentBalance'] + $data['amount'];
 
-        //         $memberAccountIds = [$selectedMember['id'], $data['account_id']];
-        //         DB::table('member_account')->insert([
-        //             'member_id' => $memberAccountIds[0],
-        //             'account_id' => $memberAccountIds[1]
-        //         ]);
+                $memberAccountIds = [$selectedMember['id'], $data['account_id']];
+                DB::table('member_account')->insert([
+                    'member_id' => $memberAccountIds[0],
+                    'account_id' => $memberAccountIds[1]
+                ]);
 
-        //         $transaction = Transaction::create([
-        //             'txnDate' => $data['txnDate'],
-        //             'account_id' => $data['account_id'],
-        //             'event_id' => $data['event_id'],
-        //             'member_id' => $data['member_id'],
-        //             'Dr' => $Dr,
-        //             'Cr' => $Cr,
-        //             'balanceBefore' => $balanceBefore
-        //         ]);
+                $transaction = Transaction::create([
+                    'txnDate' => $data['txnDate'],
+                    'account_id' => $data['account_id'],
+                    'event_id' => $data['event_id'],
+                    'member_id' => $data['member_id'],
+                    'Dr' => $Dr,
+                    'Cr' => $Cr,
+                    'balanceBefore' => $balanceBefore
+                ]);
 
-        //         Member::where('id', $selectedMember['id'])->update([
-        //             'Names' => $selectedMember['Names'],
-        //             'Code' => $selectedMember['Code'],
-        //             'Contacts' => $selectedMember['Contacts'],
-        //             'currentBalance' => $balanceAfter
-        //         ]);
-        //         return response(new TransactionResource($transaction), 201);
-        //         break;
-        //     case 2:
-        //         $Dr = 0;
-        //         $Cr = $request->amount;
-        //         break;
+                Member::where('id', $selectedMember['id'])->update([
+                    'Names' => $selectedMember['Names'],
+                    'Code' => $selectedMember['Code'],
+                    'Contacts' => $selectedMember['Contacts'],
+                    'currentBalance' => $balanceAfter
+                ]);
+                return response(new TransactionResource($transaction), 201);
+                break;
+            case 2:
+                $Dr = 0;
+                $Cr = $request->amount;
+                break;
 
-        //     default:
-        //         return back()->with('error', 'Event Not Selected!!!');
-        // }
+            default:
+                return back()->with('error', 'Event Not Selected!!!');
+        }
     }
 
     /**

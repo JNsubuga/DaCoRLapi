@@ -22,11 +22,11 @@ class StoreTransactionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'txnDate' => 'required|date',
-            'event_id' => 'required|numeric',
-            'member_id' => 'required|numeric',
-            'account_id' => 'required|numeric',
-            'amount' => 'required|numeric'
+            'txnDate' => 'required',
+            'event_id' => 'required',
+            'member_id' => 'required',
+            'account_id' => 'required',
+            'amount' => 'required'
         ];
     }
 }

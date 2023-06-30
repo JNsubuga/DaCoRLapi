@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
+use App\Http\Resources\MemberAccountsResource;
 use App\Http\Resources\MemberResource;
 use App\Models\Member;
 
@@ -60,7 +61,7 @@ class MemberController extends Controller
             ->groupBy(['account_id', 'accounts.Name', 'members.id'])
             ->orderBy('account_id', 'ASC')
             ->get();
-        return new MemberResource($memberAccounts);
+        return response(new MemberAccountsResource($memberAccounts), 200);
     }
 
     /**
