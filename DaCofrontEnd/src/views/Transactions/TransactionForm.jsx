@@ -102,7 +102,7 @@ export default function TransactionForm() {
     return (
         <PageComponent
             heading={
-                !transaction.id == null ?
+                !transaction.id === null ?
                     <div>New Transaction</div> :
                     <div>Update Transaction</div>
             }

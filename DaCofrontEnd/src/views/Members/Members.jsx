@@ -66,7 +66,7 @@ export default function Members() {
                             <div className="flex">
                                 <h1 className="w-3/4 border-b-2 border-gray-500 font-bold capitalize">
                                     {/* <a href="#">{member.Names}</a> */}
-                                    <Link to={`/members/membertansactiondetails/${member.id}`}>{member.Names}</Link>
+                                    <Link to={`/members/membertransactiondetails/${member.id}`}>{member.Names}</Link>
 
                                 </h1>
                                 <span className="w-1/4 border-b-2 border-gray-500 font-bold capitalize text-blue-500 bg-slate-300 m-px rounded text-center px-2">

@@ -67,7 +67,7 @@ const router = createBrowserRouter([
                 element: <MemberForm key='create' />
             },
             {
-                path: '/members/membertansactiondetails/:id',
+                path: '/members/membertransactiondetails/:id',
                 element: <MemberTransactionDetails />
             },
             {
