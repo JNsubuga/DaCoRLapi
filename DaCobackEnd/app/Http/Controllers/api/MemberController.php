@@ -47,6 +47,7 @@ class MemberController extends Controller
         $member = Member::where('id', $id)->first();
         return new MemberResource($member);
     }
+
     /**
      * Display the specified resource.
      * @param int $id
@@ -64,6 +65,7 @@ class MemberController extends Controller
             ->get();
         return MemberTransactionDetailsResource::collection($memberTransactionDetails);
     }
+
     /**
      * Undocumented function
      *

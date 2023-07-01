@@ -18,7 +18,6 @@ class MemberTransactionDetailsResource extends JsonResource
         return [
             'txnDate' => $this->txnDate,
             'txnId' => $this->txnId,
-            // 'accountId' => $this->accountId,
             'accountName' => $this->accountName,
             'accountOpeningYear' => $this->accountOpeningYear,
             'accountCode' => $this->accountCode,

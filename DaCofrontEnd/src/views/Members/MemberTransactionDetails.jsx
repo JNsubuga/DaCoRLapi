@@ -3,9 +3,9 @@ import axiosClient from "../../axiosClient"
 import { useParams } from "react-router-dom"
 import PageComponent from "../../Components/Core/PageComponent"
 
-export default function MemberDetails() {
+export default function MemberTransactionDetails() {
     const { id } = useParams()
-    const [user, setUser] = useState([])
+    // const [user, setUser] = useState([])
     const [loading, setLoading] = useState(false)
     const [memberTransactionDetails, setMemberTransactionDetails] = useState([])
 
@@ -13,22 +13,18 @@ export default function MemberDetails() {
         getMemberTransactionDetails()
     }, [])
 
-    const getMemberTransactionDetails = (async () => {
-        try {
-            setLoading(true)
-            await axiosClient.get(`/members/memberTransactionDetails/${id}`)
-                .then(({ data }) => {
-                    // console.log(data.data)
-                    setLoading(false)
-                    setMemberTransactionDetails(data.data)
-                })
-                .catch(() => {
-                    setLoading(false)
-                })
-        } catch (error) {
-
-        }
-    })
+    const getMemberTransactionDetails = async () => {
+        setLoading(true)
+        await axiosClient.get(`/members/memberTransactionDetails/${id}`)
+            .then(({ data }) => {
+                // console.log(data.data)
+                setLoading(false)
+                setMemberTransactionDetails(data.data)
+            })
+            .catch(() => {
+                setLoading(false)
+            })
+    }
 
     const formater = new Intl.NumberFormat('en', {
         style: 'currency',
