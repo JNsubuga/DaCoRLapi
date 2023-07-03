@@ -78,8 +78,8 @@ class MemberController extends Controller
             ->leftJoin('transactions', 'members.id', '=', 'transactions.member_id')
             ->join('accounts', 'accounts.id', '=', 'transactions.account_id')
             ->selectRaw('accounts.id as accountId, accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode, SUM(transactions.Dr) as totalAmountPaid')
-            ->groupBy(['account_id', 'accounts.Name', 'members.id'])
-            ->orderBy('account_id', 'ASC')
+            ->groupBy(['accountId', 'accountName', 'memberId'])
+            ->orderBy('accountId', 'ASC')
             ->get();
         return MemberAccountsResource::collection($memberAccounts);
     }

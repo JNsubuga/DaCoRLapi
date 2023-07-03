@@ -17,7 +17,6 @@ export default function MemberTransactionDetails() {
         setLoading(true)
         await axiosClient.get(`/members/memberTransactionDetails/${id}`)
             .then(({ data }) => {
-                // console.log(data.data)
                 setLoading(false)
                 setMemberTransactionDetails(data.data)
             })
@@ -32,7 +31,8 @@ export default function MemberTransactionDetails() {
     })
 
     return (
-        <PageComponent heading="Member Transaction Details">
+        <PageComponent
+            heading={memberTransactionDetails[0].member}>
             <table className="table-auto w-full">
                 <thead>
                     <tr className="border-b-2 border-gray-400 font-bold capitalize">
