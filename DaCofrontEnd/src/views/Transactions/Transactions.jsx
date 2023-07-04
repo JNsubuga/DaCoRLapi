@@ -3,6 +3,7 @@ import PageComponent from "../../Components/Core/PageComponent";
 import TButton from "../../Components/Core/TButton";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axiosClient";
+import CurrencyFormat from "../../Components/Core/CurrencyFormat";
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState([]);
@@ -32,11 +33,6 @@ export default function Transactions() {
         } catch (err) {
 
         }
-    })
-
-    const formater = new Intl.NumberFormat('en', {
-        style: 'currency',
-        currency: 'UGX'
     })
 
     return (
@@ -75,8 +71,8 @@ export default function Transactions() {
                                         <td className="py-0 px-6">{transaction.txnDate}</td>
                                         <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
 
-                                        <td className="py-0 px-6 text-right">{formater.format(transaction.Dr)}</td>
-                                        <td className="py-0 px-6 text-right">{formater.format(transaction.Cr)}</td>
+                                        <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Dr)}</td>
+                                        <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Cr)}</td>
                                         {/* <td className="flex items-center justify-center">
                                             <TButton color="orange" to={'/transactions/' + transaction.id + '/edit'}>
                                                 <PencilIcon className="h-6 w-6 mr-1" />

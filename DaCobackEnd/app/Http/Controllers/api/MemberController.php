@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMemberRequest;
 use App\Http\Requests\UpdateMemberRequest;
+use App\Http\Resources\MemberAccountDetailsResource;
 use App\Http\Resources\MemberAccountsResource;
 use App\Http\Resources\MemberResource;
 use App\Http\Resources\MemberTransactionDetailsResource;
@@ -82,6 +83,26 @@ class MemberController extends Controller
             ->orderBy('accountId', 'ASC')
             ->get();
         return MemberAccountsResource::collection($memberAccounts);
+    }
+
+    /**
+     * 
+     * @param int $account_id
+     * @param int $member_id
+     * @return \Illuminate\Http\Response
+     */
+    public function memberAccountDetails($member_id, $account_id)
+    {
+        $memberAccountDetails = Member::where([
+            ['members.id', $member_id],
+            ['accounts.id', $account_id]
+        ])
+            ->leftJoin('transactions', 'members.id', '=', 'transactions.member_id')
+            ->join('accounts', 'accounts.id', '=', 'transactions.account_id')
+            ->selectRaw('transactions.id as txnId, transactions.txnDate as txnDate, accounts.id as accountId, accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode, transactions.Dr as Dr, transactions.Cr as Cr')
+            ->orderBy('txnDate', 'ASC')
+            ->get();
+        return MemberAccountDetailsResource::collection($memberAccountDetails);
     }
 
     /**

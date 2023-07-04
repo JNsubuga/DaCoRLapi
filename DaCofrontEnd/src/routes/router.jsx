@@ -14,8 +14,9 @@ import MemberForm from '../views/Members/MemberForm'
 import Transactions from '../views/Transactions/Transactions'
 import TransactionForm from '../views/Transactions/TransactionForm'
 import UserForm from '../views/users/UserForm'
-import MemberAcounts from '../views/Members/MemberAcounts'
+import MemberAccounts from '../views/Members/MemberAccounts'
 import MemberTransactionDetails from '../views/Members/MemberTransactionDetails'
+import MemberAccountDetails from '../views/Members/MemberAccountDetails'
 
 const router = createBrowserRouter([
     // {
@@ -72,11 +73,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/members/memberaccounts/:id',
-                element: <MemberAcounts />
+                element: <MemberAccounts />
             },
             {
-                path: '/members/:member_id/:account_id',
-                element: <MemberAcounts />
+                path: '/members/memberaccountdetails/:member_id/:account_id',
+                element: <MemberAccountDetails />
             },
             {
                 path: '/members/:id/edit',

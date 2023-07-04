@@ -2,12 +2,14 @@ import { useEffect, useState } from "react"
 import axiosClient from "../../axiosClient"
 import { useParams } from "react-router-dom"
 import PageComponent from "../../Components/Core/PageComponent"
+import CurrencyFormat from "../../Components/Core/CurrencyFormat"
 
 export default function MemberTransactionDetails() {
     const { id } = useParams()
     // const [user, setUser] = useState([])
     const [loading, setLoading] = useState(false)
     const [memberTransactionDetails, setMemberTransactionDetails] = useState([])
+    const [member, setMember] = useState(null)
 
     useEffect(() => {
         getMemberTransactionDetails()
@@ -18,6 +20,7 @@ export default function MemberTransactionDetails() {
         await axiosClient.get(`/members/memberTransactionDetails/${id}`)
             .then(({ data }) => {
                 setLoading(false)
+                setMember(data.data[0].member)
                 setMemberTransactionDetails(data.data)
             })
             .catch(() => {
@@ -25,14 +28,11 @@ export default function MemberTransactionDetails() {
             })
     }
 
-    const formater = new Intl.NumberFormat('en', {
-        style: 'currency',
-        currency: 'UGX'
-    })
 
+    // console.log(memberTransactionDetails[0].member)
     return (
         <PageComponent
-            heading={memberTransactionDetails[0].member}>
+            heading={member}>
             <table className="table-auto w-full">
                 <thead>
                     <tr className="border-b-2 border-gray-400 font-bold capitalize">
@@ -61,8 +61,8 @@ export default function MemberTransactionDetails() {
                                     <td className="py-0 px-6">{transaction.txnDate}</td>
                                     <td className="py-0 px-6">{transaction.accountName}</td>
                                     <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
-                                    <td className="py-0 px-6 text-right">{formater.format(transaction.Cr)}</td>
-                                    <td className="py-0 px-6 text-right">{formater.format(transaction.Dr)}</td>
+                                    <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Cr)}</td>
+                                    <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Dr)}</td>
                                 </tr>
                             ))
                         }

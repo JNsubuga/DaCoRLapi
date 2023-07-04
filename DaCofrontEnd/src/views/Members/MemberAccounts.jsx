@@ -3,8 +3,9 @@ import PageComponent from "../../Components/Core/PageComponent";
 // import { useStateContext } from "../../Contexts/ContextProvider";
 import axiosClient from "../../axiosClient";
 import { Link, useParams } from "react-router-dom";
+import CurrencyFormat from "../../Components/Core/CurrencyFormat";
 
-export default function MemberAcounts() {
+export default function MemberAccounts() {
     const { id } = useParams()
     const [memberAccounts, setMemberAccounts] = useState([])
     const [loading, setLoading] = useState(false)
@@ -26,12 +27,6 @@ export default function MemberAcounts() {
             })
 
     }
-
-    const formater = new Intl.NumberFormat('en', {
-        style: 'currency',
-        currency: 'UGX'
-    })
-
     return (
         <PageComponent
             heading="Members Accounts"
@@ -65,12 +60,12 @@ export default function MemberAcounts() {
                             {memberAccounts && memberAccounts.map(account => (
                                 <tr className="border-b-2 border-gray-300" key={account.accountId}>
                                     <td className="py-0 px-6 text-left">
-                                        <Link to={`members/${account.memberId}/${account.accountId}`}>{account.accountName}</Link>
+                                        <Link to={`/members/memberaccountdetails/${account.memberId}/${account.accountId}`}>{account.accountName}</Link>
                                     </td>
                                     <td className="py-0 px-6 text-left">{'F' + account.accountOpeningYear + '-' + account.memberCode + '-' + account.accountCode}</td>
-                                    <td className="py-0 px-6 text-right">{formater.format(account.accountAnualPrinciple)}</td>
-                                    <td className="py-0 px-6 text-right">{formater.format(account.totalAmountPaid)}</td>
-                                    <td className="py-0 px-6 text-right">{formater.format(account.accountAnualPrinciple - account.totalAmountPaid)}</td>
+                                    <td className="py-0 px-6 text-right">{CurrencyFormat(account.accountAnualPrinciple)}</td>
+                                    <td className="py-0 px-6 text-right">{CurrencyFormat(account.totalAmountPaid)}</td>
+                                    <td className="py-0 px-6 text-right">{CurrencyFormat(account.accountAnualPrinciple - account.totalAmountPaid)}</td>
                                 </tr>
                             ))}
                         </tbody>

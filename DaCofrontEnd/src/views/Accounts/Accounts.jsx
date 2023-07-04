@@ -6,6 +6,7 @@ import TButton from "../../Components/Core/TButton"
 import { PencilIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { Link } from "react-router-dom"
 import { NumericFormat } from "react-number-format"
+import CurrencyFormat from "../../Components/Core/CurrencyFormat"
 
 export default function Accounts() {
     const [accounts, setAccounts] = useState([])
@@ -49,11 +50,6 @@ export default function Accounts() {
         }
     }
 
-    const formater = new Intl.NumberFormat('en', {
-        style: 'currency',
-        currency: 'UGX'
-    })
-
     return (
         <PageComponent
             heading="Accounts"
@@ -83,7 +79,7 @@ export default function Accounts() {
                             </td>
                             <td className="py-0 px-6 text-right">{account.year}</td>
                             <td className="py-0 px-6 text-left">{account.Code}</td>
-                            <td className="py-0 px-6 text-right">{formater.format(account.AnualPrinciple)}</td>
+                            <td className="py-0 px-6 text-right">{CurrencyFormat(account.AnualPrinciple)}</td>
                             <td className="flex items-center justify-center">
                                 <TButton color="orange" to={'/accounts/' + account.id + '/edit'}>
                                     <PencilIcon className="h-6 w-6 mr-1" />
