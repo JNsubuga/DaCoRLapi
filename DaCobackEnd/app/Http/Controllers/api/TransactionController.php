@@ -18,7 +18,7 @@ class TransactionController extends Controller
     public function index()
     {
         return TransactionResource::collection(
-            Transaction::query()->orderBy('txnDate', 'desc')->paginate(50)
+            Transaction::query()->orderBy('txnDate', 'asc')->paginate(50)
         );
     }
 

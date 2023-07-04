@@ -3,7 +3,7 @@ import PageComponent from "../../Components/Core/PageComponent";
 // import { useStateContext } from "../../Contexts/ContextProvider";
 import axiosClient from "../../axiosClient";
 import { Link, useParams } from "react-router-dom";
-import CurrencyFormat from "../../Components/Core/CurrencyFormat";
+import { CurrencyFormat } from "../../Components/Core/Locale";
 
 export default function MemberAccounts() {
     const { id } = useParams()

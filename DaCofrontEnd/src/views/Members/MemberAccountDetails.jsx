@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import PageComponent from "../../Components/Core/PageComponent";
 import { useParams } from "react-router-dom";
 import axiosClient from "../../axiosClient";
-import CurrencyFormat from "../../Components/Core/CurrencyFormat";
+import { CurrencyFormat, DateFormat } from "../../Components/Core/Locale";
 
 export default function MemberAccountDetails() {
     const { member_id, account_id } = useParams()
@@ -20,7 +20,7 @@ export default function MemberAccountDetails() {
         setLoading(true)
         await axiosClient.get(`members/memberAccountDetails/${member_id}/${account_id}`)
             .then(({ data }) => {
-                console.log(data.data)
+                // console.log(data.data)
                 setAccount(data.data[0].accountName)
                 setMember(data.data[0].member)
                 setAccountOpeningYear(data.data[0].accountOpeningYear)
@@ -48,25 +48,28 @@ export default function MemberAccountDetails() {
                         <th className="py-1 px-6 text-right">Cr</th>
                     </tr>
                 </thead>
-                {loading &&
+                {/* {loading &&
                     <tbody>
-                        <div className="mx-auto h-10 text-center bg-slate-200 space-x-2">
-                            Loading ...
-                        </div>
+                        <tr>
+                            <td className="mx-auto h-10 text-center bg-slate-200 space-x-2" colSpan="4">
+                                Loading ...
+                            </td>
+                        </tr>
+
                     </tbody>
-                }
-                {/* {!loading && */}
+                } */}
                 <tbody>
                     {memberAccountDetails &&
                         memberAccountDetails.map(memberAccountDetail => (
                             <tr className="border-b-2 border-gray-300" key={memberAccountDetail.txnId}>
-                                <td className="py-0 px-6 text-left">{memberAccountDetail.txnDate}</td>
+                                <td className="py-0 px-6 text-left">{DateFormat(memberAccountDetail.txnDate)}</td>
                                 {/* <td className="py-0 px-6 text-left">{memberAccountDetail.accountName}</td> */}
                                 <td className="py-0 px-6 text-left">{'F' + memberAccountDetail.accountOpeningYear + '-' + memberAccountDetail.memberCode + '-' + memberAccountDetail.accountCode}</td>
                                 <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Dr)}</td>
                                 <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Cr)}</td>
                             </tr>
                         ))
+
                     }
                 </tbody>
                 {!memberAccountDetails &&
@@ -78,6 +81,7 @@ export default function MemberAccountDetails() {
                         </tr>
                     </tbody>
                 }
+
                 {/* } */}
                 {/* <tr>
                     <td className="py-0 px-6" colspan="3">Total</td>

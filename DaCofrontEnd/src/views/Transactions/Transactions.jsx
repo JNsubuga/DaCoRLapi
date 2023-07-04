@@ -3,7 +3,7 @@ import PageComponent from "../../Components/Core/PageComponent";
 import TButton from "../../Components/Core/TButton";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axiosClient";
-import CurrencyFormat from "../../Components/Core/CurrencyFormat";
+import { CurrencyFormat, DateFormat } from "../../Components/Core/Locale";
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState([]);
@@ -68,7 +68,7 @@ export default function Transactions() {
                             {transactions &&
                                 transactions.map(transaction => (
                                     <tr className="border-b-2 border-gray-300" key={transaction.id}>
-                                        <td className="py-0 px-6">{transaction.txnDate}</td>
+                                        <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
                                         <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
 
                                         <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Dr)}</td>

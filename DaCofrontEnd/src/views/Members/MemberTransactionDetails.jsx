@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axiosClient from "../../axiosClient"
 import { useParams } from "react-router-dom"
 import PageComponent from "../../Components/Core/PageComponent"
-import CurrencyFormat from "../../Components/Core/CurrencyFormat"
+import { CurrencyFormat, DateFormat } from "../../Components/Core/Locale"
 
 export default function MemberTransactionDetails() {
     const { id } = useParams()
@@ -58,7 +58,7 @@ export default function MemberTransactionDetails() {
                             memberTransactionDetails &&
                             memberTransactionDetails.map(transaction => (
                                 <tr key={transaction.txnId}>
-                                    <td className="py-0 px-6">{transaction.txnDate}</td>
+                                    <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
                                     <td className="py-0 px-6">{transaction.accountName}</td>
                                     <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
                                     <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Cr)}</td>

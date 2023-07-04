@@ -77,7 +77,7 @@ export default function TransactionForm() {
                 await axiosClient.put(`/transactions/${transaction.id}`, transaction)
                     .then(() => {
                         setNotification("Transaction was successfully updated!!")
-                        navigate('/transactions')
+                        // navigate('/transactions')
                     })
             } catch (err) {
                 console.log(err.response)
@@ -108,7 +108,7 @@ export default function TransactionForm() {
             //     // : <div>Update Transaction</div>
             // }
             buttonz={
-                <TButton to="/transaction" back>
+                <TButton to="/transactions" back>
                     Transaction
                 </TButton>
             }>

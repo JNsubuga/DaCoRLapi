@@ -5,8 +5,7 @@ import PageComponent from "../../Components/Core/PageComponent"
 import TButton from "../../Components/Core/TButton"
 import { PencilIcon, PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline"
 import { Link } from "react-router-dom"
-import { NumericFormat } from "react-number-format"
-import CurrencyFormat from "../../Components/Core/CurrencyFormat"
+import { CurrencyFormat } from "../../Components/Core/Locale"
 
 export default function Accounts() {
     const [accounts, setAccounts] = useState([])
