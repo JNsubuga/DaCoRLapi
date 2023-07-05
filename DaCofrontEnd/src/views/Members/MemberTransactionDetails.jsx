@@ -32,10 +32,16 @@ export default function MemberTransactionDetails() {
     // console.log(memberTransactionDetails[0].member)
     return (
         <PageComponent
-            heading={member}>
+            heading={
+                <div className="font-semibold capitalize text-green-700">
+                    {member + '\'s Trasaction Details'}
+                </div>
+            }
+        >
+
             <table className="table-auto w-full">
                 <thead>
-                    <tr className="border-b-2 border-gray-400 font-bold capitalize">
+                    <tr className="border-b-2 border-gray-600 font-bold capitalize">
                         <th className="py-1 px-6 text-left">Date</th>
                         <th className="py-1 px-6 text-left">Account</th>
                         <th className="py-1 px-6 text-left">Folio</th>
@@ -57,7 +63,7 @@ export default function MemberTransactionDetails() {
                         {
                             memberTransactionDetails &&
                             memberTransactionDetails.map(transaction => (
-                                <tr key={transaction.txnId}>
+                                <tr key={transaction.txnId} className="border-b border-gray-400">
                                     <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
                                     <td className="py-0 px-6">{transaction.accountName}</td>
                                     <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
@@ -68,11 +74,10 @@ export default function MemberTransactionDetails() {
                         }
                     </tbody>
                 }
-                {!memberTransactionDetails && <tbody>
+                {!memberTransactionDetails &&
                     <tbody>
                         < tr ><td colspan="5" className="text-red-500 text-center">No record in the database!!!</td></tr >
                     </tbody>
-                </tbody>
                 }
             </table>
 

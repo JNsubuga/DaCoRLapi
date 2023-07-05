@@ -47,14 +47,18 @@ export default function Members() {
     })
     return (
         <PageComponent
-            heading="Members"
+            heading={
+                <div className="font-semibold capitalize text-green-700">
+                    Members List
+                </div>
+            }
             buttonz={(
                 <TButton color="green" to="/members/create">
                     <PlusCircleIcon className="h-6 w-6 mr-1" />
                     Register Member
                 </TButton>
             )}>
-            <div className="max-w-full grid lg:grid-cols-5 sm:grid-cols-2 md:grid-cols-2">
+            <div className="max-w-full grid lg:grid-cols-5 sm:grid-cols-1 md:grid-cols-2">
                 {loading &&
                     <div className="mx-auto h-10 text-center bg-slate-200 space-x-2">
                         Loading ...

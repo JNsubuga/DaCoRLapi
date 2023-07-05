@@ -21,6 +21,7 @@ export default function MemberAccountDetails() {
         await axiosClient.get(`members/memberAccountDetails/${member_id}/${account_id}`)
             .then(({ data }) => {
                 // console.log(data.data)
+                setLoading(false)
                 setAccount(data.data[0].accountName)
                 setMember(data.data[0].member)
                 setAccountOpeningYear(data.data[0].accountOpeningYear)
@@ -34,13 +35,13 @@ export default function MemberAccountDetails() {
     return (
         <PageComponent heading={
             member &&
-            <div className="font-bold capitalize text-green-700">
+            <div className="font-semibold capitalize text-green-700">
                 {member + '\'s ' + account + ' for Financial Year ' + accountOpeningYear}
             </div>
         }>
             <table className="table-auto w-full">
                 <thead>
-                    <tr className="border-b-4 border-gray-400 font-bold capitalize">
+                    <tr className="border-b-2 border-gray-600 font-bold capitalize">
                         <th className="py-1 px-6 text-left">Value-Date</th>
                         {/* <th className="py-1 px-6 text-left">Account</th> */}
                         <th className="py-1 px-6 text-left">Folio</th>
@@ -48,7 +49,7 @@ export default function MemberAccountDetails() {
                         <th className="py-1 px-6 text-right">Cr</th>
                     </tr>
                 </thead>
-                {/* {loading &&
+                {loading &&
                     <tbody>
                         <tr>
                             <td className="mx-auto h-10 text-center bg-slate-200 space-x-2" colSpan="4">
@@ -57,21 +58,23 @@ export default function MemberAccountDetails() {
                         </tr>
 
                     </tbody>
-                } */}
-                <tbody>
-                    {memberAccountDetails &&
-                        memberAccountDetails.map(memberAccountDetail => (
-                            <tr className="border-b-2 border-gray-300" key={memberAccountDetail.txnId}>
-                                <td className="py-0 px-6 text-left">{DateFormat(memberAccountDetail.txnDate)}</td>
-                                {/* <td className="py-0 px-6 text-left">{memberAccountDetail.accountName}</td> */}
-                                <td className="py-0 px-6 text-left">{'F' + memberAccountDetail.accountOpeningYear + '-' + memberAccountDetail.memberCode + '-' + memberAccountDetail.accountCode}</td>
-                                <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Dr)}</td>
-                                <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Cr)}</td>
-                            </tr>
-                        ))
+                }
+                {!loading &&
+                    <tbody>
+                        {memberAccountDetails &&
+                            memberAccountDetails.map(memberAccountDetail => (
+                                <tr className="border-b border-gray-400" key={memberAccountDetail.txnId}>
+                                    <td className="py-0 px-6 text-left">{DateFormat(memberAccountDetail.txnDate)}</td>
+                                    {/* <td className="py-0 px-6 text-left">{memberAccountDetail.accountName}</td> */}
+                                    <td className="py-0 px-6 text-left">{'F' + memberAccountDetail.accountOpeningYear + '-' + memberAccountDetail.memberCode + '-' + memberAccountDetail.accountCode}</td>
+                                    <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Dr)}</td>
+                                    <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Cr)}</td>
+                                </tr>
+                            ))
 
-                    }
-                </tbody>
+                        }
+                    </tbody>
+                }
                 {!memberAccountDetails &&
                     <tbody>
                         <tr>
@@ -81,12 +84,6 @@ export default function MemberAccountDetails() {
                         </tr>
                     </tbody>
                 }
-
-                {/* } */}
-                {/* <tr>
-                    <td className="py-0 px-6" colspan="3">Total</td>
-                    <td className="py-0 px-6 text-right">{{ number_format($totalAmountPaid, 2, '.', ',') }}</td>
-                </tr> */}
             </table>
         </PageComponent>
     )

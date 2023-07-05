@@ -37,7 +37,12 @@ export default function Transactions() {
 
     return (
         <PageComponent
-            heading="Transactions"
+            heading={
+                <div className="font-semibold capitalize text-green-700">
+                    Transactions
+                </div>
+
+            }
             buttonz={
                 <TButton color="green" to="/transactions/create">
                     <PlusCircleIcon className="h-6 w-6 mr-1" />
@@ -47,7 +52,7 @@ export default function Transactions() {
             <div>
                 <table className="w-full">
                     <thead>
-                        <tr className="border-b-2 border-gray-400 font-bold capitalize">
+                        <tr className="border-b-2 border-gray-600 font-bold capitalize">
                             <th className="py-1 px-6 text-left">Date</th>
                             <th className="py-1 px-6 text-left">Folio</th>
                             <th className="py-1 px-6 text-right">Dr</th>
@@ -67,7 +72,7 @@ export default function Transactions() {
                         <tbody>
                             {transactions &&
                                 transactions.map(transaction => (
-                                    <tr className="border-b-2 border-gray-300" key={transaction.id}>
+                                    <tr className="border-b border-gray-400" key={transaction.id}>
                                         <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
                                         <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
 

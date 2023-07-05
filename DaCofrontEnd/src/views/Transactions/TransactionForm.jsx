@@ -85,7 +85,7 @@ export default function TransactionForm() {
         } else {
             await axiosClient.post('/transactions', transaction)
                 .then(({ data }) => {
-                    console.log(data)
+                    // console.log(data)
                     setNotification("Transaction was successfully Stored!!")
                     navigate('/transactions')
                 })
@@ -107,11 +107,12 @@ export default function TransactionForm() {
             //     <div>New Transaction</div>
             //     // : <div>Update Transaction</div>
             // }
-            buttonz={
+            buttonz={(
                 <TButton to="/transactions" back>
                     Transaction
                 </TButton>
-            }>
+            )}
+        >
             {errors &&
                 <div>
                     {Object.keys(errors).map(key => (
