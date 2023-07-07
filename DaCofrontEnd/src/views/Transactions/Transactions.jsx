@@ -25,6 +25,7 @@ export default function Transactions() {
             await axiosClient.get('/transactions')
                 .then(({ data }) => {
                     setLoading(false)
+                    console.log(data.data)
                     setTransactions(data.data)
                 })
                 .catch(() => {
@@ -74,19 +75,20 @@ export default function Transactions() {
                                 transactions.map(transaction => (
                                     <tr className="border-b border-gray-400" key={transaction.id}>
                                         <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
-                                        <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
-
-                                        <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Dr)}</td>
-                                        <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Cr)}</td>
-                                        {/* <td className="flex items-center justify-center">
-                                            <TButton color="orange" to={'/transactions/' + transaction.id + '/edit'}>
-                                                <PencilIcon className="h-6 w-6 mr-1" />
-                                                Edit
-                                            </TButton>
-                                            <TButton color="red" onClick={(ev) => handleDelete(transaction)}>
-                                                <TrashIcon className="h-6 w-6 mx-auto" />
-                                            </TButton>
-                                        </td> */}
+                                        {/* <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td> */}
+                                        <td className="py-0 px-6 text-left">{transaction.Folio}</td>
+                                        {transaction.event == 1 &&
+                                            <>
+                                                <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Amount)}</td>
+                                                <td className="py-0 px-6 text-right">{CurrencyFormat(0)}</td>
+                                            </>
+                                        }
+                                        {transaction.event == 2 &&
+                                            <>
+                                                <td className="py-0 px-6 text-right">{CurrencyFormat(0)}</td>
+                                                <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Amount)}</td>
+                                            </>
+                                        }
                                     </tr >
                                 ))
                             }

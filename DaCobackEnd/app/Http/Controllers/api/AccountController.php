@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAccountRequest;
 use App\Http\Requests\UpdateAccountRequest;
+use App\Http\Resources\AccountDetailsResource;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
 
@@ -12,6 +13,7 @@ class AccountController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -39,6 +41,23 @@ class AccountController extends Controller
     {
         $account = Account::where('id', $id)->first();
         return new AccountResource($account);
+    }
+
+    /**
+     * @param int $id
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function accountMembers($id)
+    {
+        $accountDetails = Account::where('accounts.id', $id)
+            ->leftJoin('transactions', 'accounts.id', '=', 'transactions.account_id')
+            ->join('members', 'members.id', '=', 'transactions.member_id')
+            ->selectRaw('accounts.id as accountId, accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode, SUM(transactions.Dr) as totalAmountPaid')
+            ->groupBy(['accountId', 'accountName', 'memberId'])
+            ->orderBy('memberId', 'ASC')
+            ->get();
+
+        return AccountDetailsResource::collection($accountDetails);
     }
 
     /**

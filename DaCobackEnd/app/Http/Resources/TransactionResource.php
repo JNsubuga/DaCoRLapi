@@ -16,15 +16,23 @@ class TransactionResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            // 'id' => $this->id,
+            // 'txnDate' => $this->txnDate,
+            // 'accountOpeningYear' => $this->account->year,
+            // 'accountCode' => $this->account->Code,
+            // 'event_id' => $this->event_id,
+            // 'memberCode' => $this->member->Code,
+            // 'Dr' => $this->Dr,
+            // 'Cr' => $this->Cr,
+            // 'balanceBefore' => $this->balanceBefore
+
             'id' => $this->id,
             'txnDate' => $this->txnDate,
-            'accountOpeningYear' => $this->account->year,
-            'accountCode' => $this->account->Code,
-            'event_id' => $this->event_id,
-            'memberCode' => $this->member->Code,
-            'Dr' => $this->Dr,
-            'Cr' => $this->Cr,
-            'balanceBefore' => $this->balanceBefore
+            'Folio' => $this->account->year . '-' . $this->member->Code . '-' . $this->account->Code,
+            'event' => $this->event_id,
+            'Amount' => $this->Dr,
+            // 'Cr' => $this->Cr,
+            // 'balanceBefore' => $this->balanceBefore
         ];
     }
 }

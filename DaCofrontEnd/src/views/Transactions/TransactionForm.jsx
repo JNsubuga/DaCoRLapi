@@ -102,16 +102,16 @@ export default function TransactionForm() {
     return (
         <PageComponent
             heading="New Transaction"
-            // heading={
-            //     // !transaction.id == null ?
-            //     <div>New Transaction</div>
-            //     // : <div>Update Transaction</div>
-            // }
-            buttonz={(
-                <TButton to="/transactions" back>
-                    Transaction
-                </TButton>
-            )}
+        // heading={
+        //     // !transaction.id == null ?
+        //     <div>New Transaction</div>
+        //     // : <div>Update Transaction</div>
+        // }
+        // buttonz={(
+        //     <TButton to="/transactions" back>
+        //         Transaction
+        //     </TButton>
+        // )}
         >
             {errors &&
                 <div>

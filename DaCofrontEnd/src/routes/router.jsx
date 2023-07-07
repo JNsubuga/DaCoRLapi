@@ -17,6 +17,7 @@ import UserForm from '../views/users/UserForm'
 import MemberAccounts from '../views/Members/MemberAccounts'
 import MemberTransactionDetails from '../views/Members/MemberTransactionDetails'
 import MemberAccountDetails from '../views/Members/MemberAccountDetails'
+import AccountDetails from '../views/Accounts/AccountDetails'
 
 const router = createBrowserRouter([
     // {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
             {
                 path: '/accounts',
                 element: <Accounts />
+            },
+            {
+                path: '/accounts/:id',
+                element: <AccountDetails />
             },
             {
                 path: '/accounts/create',

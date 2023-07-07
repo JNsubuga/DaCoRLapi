@@ -33,8 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [AccountController::class, 'index']);
         Route::post('/', [AccountController::class, 'store']);
         Route::get('/{id}', [AccountController::class, 'show'])->where('id', '[0-9]+');
-        Route::get('/{account_id?}/{member_id?}', [AccountController::class, 'memberAccountDetails'])->where(['member_id' => '[0-9]+'], ['account_id' => '[0-9]+']);
-        Route::get('/{id}/edit', [AccountController::class, 'edit'])->where('id', '[0-9]+');
+        Route::get('/accountMembers/{id}', [AccountController::class, 'accountMembers'])->where('id', '[0-9]+');
         Route::put('/{id}', [AccountController::class, 'update'])->where('id', '[0-9]+');
         Route::delete('/{id}', [AccountController::class, 'destroy'])->where('id', '[0-9]+');
     });

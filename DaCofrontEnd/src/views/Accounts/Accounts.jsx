@@ -60,7 +60,7 @@ export default function Accounts() {
             )}>
             <table className="table-auto w-full">
                 <thead>
-                    <tr className="border-b-4 border-gray-400 font-bold capitalize">
+                    <tr className="border-b-2 border-gray-600 font-bold capitalize">
                         <th className="py-1 px-6 text-left">Account</th>
                         <th className="py-1 px-6 text-right">Year of account Opening</th>
                         <th className="py-1 px-6 text-left">Code</th>
@@ -70,9 +70,9 @@ export default function Accounts() {
                 </thead>
                 <tbody>
                     {accounts && accounts.map(account => (
-                        <tr className="border-b-2 border-gray-300" key={account.id}>
+                        <tr className="border-b border-gray-400" key={account.id}>
                             <td className="py-0 px-6">
-                                <Link to={`/acccount/${account.id}`}>
+                                <Link to={`/accounts/${account.id}`}>
                                     {account.Name}
                                 </Link>
                             </td>

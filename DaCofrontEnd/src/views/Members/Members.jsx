@@ -58,7 +58,7 @@ export default function Members() {
                     Register Member
                 </TButton>
             )}>
-            <div className="max-w-full grid lg:grid-cols-5 sm:grid-cols-1 md:grid-cols-2">
+            <div className="max-w-full grid lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-1">
                 {loading &&
                     <div className="mx-auto h-10 text-center bg-slate-200 space-x-2">
                         Loading ...
@@ -69,12 +69,10 @@ export default function Members() {
                         <div className="rounded-xl border border-green-600 p-2 shadow-lg m-1" key={member.id}>
                             <div className="flex">
                                 <h1 className="w-3/4 border-b-2 border-gray-500 font-bold capitalize">
-                                    {/* <a href="#">{member.Names}</a> */}
                                     <Link to={`/members/membertransactiondetails/${member.id}`}>{member.Names}</Link>
 
                                 </h1>
-                                <span className="w-1/4 border-b-2 border-gray-500 font-bold capitalize text-blue-500 bg-slate-300 m-px rounded text-center px-2">
-                                    {/* <a href="{{ route('member.memberAccounts', $member->id) }}">Acounts</a> */}
+                                <span className="w-1/4 border-b-2 border-gray-500 font-bold capitalize text-blue-500 bg-slate-300 m-px rounded text-center px-2 mx-auto">
                                     <Link to={`/members/memberaccounts/${member.id}`}>Acounts</Link>
                                 </span>
                             </div>
