@@ -49,42 +49,44 @@ export default function MemberAccountDetails() {
                         <th className="py-1 px-6 text-right">Cr</th>
                     </tr>
                 </thead>
-                {loading &&
-                    <tbody>
+                <tbody>
+                    {loading ?
                         <tr>
                             <td className="mx-auto h-10 text-center bg-slate-200 space-x-2" colSpan="4">
                                 Loading ...
                             </td>
-                        </tr>
-
-                    </tbody>
-                }
-                {!loading &&
-                    <tbody>
-                        {memberAccountDetails &&
+                        </tr> :
+                        (memberAccountDetails ?
                             memberAccountDetails.map(memberAccountDetail => (
                                 <tr className="border-b border-gray-400" key={memberAccountDetail.txnId}>
                                     <td className="py-0 px-6 text-left">{DateFormat(memberAccountDetail.txnDate)}</td>
                                     {/* <td className="py-0 px-6 text-left">{memberAccountDetail.accountName}</td> */}
-                                    <td className="py-0 px-6 text-left">{'F' + memberAccountDetail.accountOpeningYear + '-' + memberAccountDetail.memberCode + '-' + memberAccountDetail.accountCode}</td>
-                                    <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Dr)}</td>
-                                    <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Cr)}</td>
-                                </tr>
-                            ))
+                                    {/* <td className="py-0 px-6 text-left">{'F' + memberAccountDetail.accountOpeningYear + '-' + memberAccountDetail.memberCode + '-' + memberAccountDetail.accountCode}</td> */}
+                                    <td className="py-0 px-6 text-left">{memberAccountDetail.Folio}</td>
+                                    {memberAccountDetail.event == 1 &&
+                                        <>
+                                            <td className="py-0 px-6 text-right">{CurrencyFormat(0)}</td>
+                                            <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Amount)}</td>
+                                        </>
+                                    }
+                                    {memberAccountDetail.event == 2 &&
+                                        <>
+                                            <td className="py-0 px-6 text-right">{CurrencyFormat(memberAccountDetail.Amount)}</td>
+                                            <td className="py-0 px-6 text-right">{CurrencyFormat(0)}</td>
+                                        </>
+                                    }
 
-                        }
-                    </tbody>
-                }
-                {!memberAccountDetails &&
-                    <tbody>
-                        <tr>
-                            <td colspan="5" className="text-red-500">
-                                No transaction record found in the database!!!
-                            </td>
-                        </tr>
-                    </tbody>
-                }
+                                </tr>
+                            )) :
+                            <tr>
+                                <td colspan="4" className="text-red-500 text-center">
+                                    No record in the database!!!
+                                </td>
+                            </tr>
+                        )
+                    }
+                </tbody>
             </table>
-        </PageComponent>
+        </PageComponent >
     )
 }

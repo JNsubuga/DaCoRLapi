@@ -44,17 +44,14 @@ export default function AccountDetails() {
                         <th className="py-1 px-2 text-right">Balance</th>
                     </tr>
                 </thead>
-                {loading &&
-                    <tbody>
+                <tbody>
+                    {loading ?
                         <tr>
                             <td colSpan="5" className="text-center">
                                 Loading ...
                             </td>
-                        </tr>
-                    </tbody>}
-                {!loading &&
-                    <tbody>
-                        {members &&
+                        </tr> :
+                        (members ?
                             members.map(member => (
                                 <tr className="border-b border-gray-400" key={member.memberId}>
                                     <td className="py-0 px-2 text-left">
@@ -62,17 +59,19 @@ export default function AccountDetails() {
                                             {member.member}
                                         </Link>
                                     </td>
-                                    {/* <td className="py-0 px-2 text-left">{'F' + member.accountOpeningYear + '-' + member.memberCode + '-' + member.accountCode}</td> */}
                                     <td className="py-0 px-2 text-left">{member.Folio}</td>
                                     <td className="py-0 px-2 text-right">{CurrencyFormat(member.accountAnualPrinciple)}</td>
                                     <td className="py-0 px-2 text-right">{CurrencyFormat(member.totalAmountPaid)}</td>
-                                    {/* <td className="py-0 px-2 text-right">{CurrencyFormat(member.accountAnualPrinciple - member.totalAmountPaid)}</td> */}
                                     <td className="py-0 px-2 text-right">{CurrencyFormat(member.accountBalance)}</td>
                                 </tr>
-                            ))
-                        }
-                    </tbody>
-                }
+                            )) :
+                            <td colspan="5" className="text-red-500 text-center">
+                                No record in the database!!!
+                            </td>
+                        )
+                        // }
+                    }
+                </tbody>
             </table>
         </PageComponent>
 

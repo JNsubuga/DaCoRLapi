@@ -69,31 +69,40 @@ export default function Accounts() {
                     </tr>
                 </thead>
                 <tbody>
-                    {accounts && accounts.map(account => (
-                        <tr className="border-b border-gray-400" key={account.id}>
-                            <td className="py-0 px-6">
-                                <Link to={`/accounts/${account.id}`}>
-                                    {account.Name}
-                                </Link>
+                    {loading ?
+                        <tr>
+                            <td colSpan="5" className="text-center">
+                                Loading ...
                             </td>
-                            <td className="py-0 px-6 text-right">{account.year}</td>
-                            <td className="py-0 px-6 text-left">{account.Code}</td>
-                            <td className="py-0 px-6 text-right">{CurrencyFormat(account.AnualPrinciple)}</td>
-                            <td className="flex items-center justify-center">
-                                <TButton color="orange" to={'/accounts/' + account.id + '/edit'}>
-                                    <PencilIcon className="h-6 w-6 mr-1" />
-                                    Edit
-                                </TButton>
-                                <TButton color="red" onClick={() => handleDelete(account)}>
-                                    <TrashIcon className="h-6 w-6 mx-auto" />
-                                </TButton>
-                            </td>
-                        </tr>
-                    ))}
-                    {!accounts &&
-                        <tbody>
-                            < tr ><td colspan="5" className="text-red-500">No record in the database!!!</td></tr >
-                        </tbody>
+                        </tr> :
+                        (accounts ?
+                            accounts.map(account => (
+                                <tr className="border-b border-gray-400" key={account.id}>
+                                    <td className="py-0 px-6">
+                                        <Link to={`/accounts/${account.id}`}>
+                                            {account.Name}
+                                        </Link>
+                                    </td>
+                                    <td className="py-0 px-6 text-right">{account.year}</td>
+                                    <td className="py-0 px-6 text-left">{account.Code}</td>
+                                    <td className="py-0 px-6 text-right">{CurrencyFormat(account.AnualPrinciple)}</td>
+                                    <td className="flex items-center justify-center">
+                                        <TButton color="orange" to={'/accounts/' + account.id + '/edit'}>
+                                            <PencilIcon className="h-6 w-6 mr-1" />
+                                            Edit
+                                        </TButton>
+                                        <TButton color="red" onClick={() => handleDelete(account)}>
+                                            <TrashIcon className="h-6 w-6 mx-auto" />
+                                        </TButton>
+                                    </td>
+                                </tr>
+                            )) :
+                            <tr>
+                                <td colspan="5" className="text-red-500 text-center">
+                                    No record in the database!!!
+                                </td>
+                            </tr>
+                        )
                     }
                 </tbody>
             </table>

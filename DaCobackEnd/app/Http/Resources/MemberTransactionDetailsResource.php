@@ -16,17 +16,25 @@ class MemberTransactionDetailsResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
-            'txnDate' => $this->txnDate,
-            'txnId' => $this->txnId,
-            'accountName' => $this->accountName,
-            'accountOpeningYear' => $this->accountOpeningYear,
-            'accountCode' => $this->accountCode,
-            'accountAnualPrinciple' => $this->accountAnualPrinciple,
-            'memberId' => $this->memberId,
+            // 'txnDate' => $this->txnDate,
+            // 'txnId' => $this->txnId,
+            // 'accountName' => $this->accountName,
+            // 'accountOpeningYear' => $this->accountOpeningYear,
+            // 'accountCode' => $this->accountCode,
+            // 'accountAnualPrinciple' => $this->accountAnualPrinciple,
+            // 'memberId' => $this->memberId,
+            // 'member' => $this->member,
+            // 'memberCode' => $this->memberCode,
+            // 'Dr' => $this->Dr,
+            // 'Cr' => $this->Cr
+
             'member' => $this->member,
-            'memberCode' => $this->memberCode,
-            'Dr' => $this->Dr,
-            'Cr' => $this->Cr
+            'txnId' => $this->txnId,
+            'txnDate' => $this->txnDate,
+            'accountName' => $this->accountName,
+            'Folio' => $this->accountOpeningYear . '-' . $this->memberCode . '-' . $this->accountCode,
+            'event' => $this->event_id,
+            'Amount' => $this->Dr
         ];
     }
 }

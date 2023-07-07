@@ -61,7 +61,7 @@ class MemberController extends Controller
         $memberTransactionDetails = Member::where('members.id', $id)
             ->leftJoin('transactions', 'members.id', '=', 'transactions.member_id')
             ->join('accounts', 'accounts.id', '=', 'transactions.account_id')
-            ->selectRaw('accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode,  transactions.txnDate as txnDate, transactions.id as txnId, transactions.Dr as Dr, transactions.Cr as Cr')
+            ->selectRaw('accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode,  transactions.txnDate as txnDate, transactions.id as txnId, transactions.Dr as Dr, transactions.Cr as Cr, transactions.event_id as event_id')
             ->orderBy('txnDate', 'ASC')
             ->get();
         return MemberTransactionDetailsResource::collection($memberTransactionDetails);
@@ -99,7 +99,7 @@ class MemberController extends Controller
         ])
             ->leftJoin('transactions', 'members.id', '=', 'transactions.member_id')
             ->join('accounts', 'accounts.id', '=', 'transactions.account_id')
-            ->selectRaw('transactions.id as txnId, transactions.txnDate as txnDate, accounts.id as accountId, accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode, transactions.Dr as Dr, transactions.Cr as Cr')
+            ->selectRaw('transactions.id as txnId, transactions.txnDate as txnDate, accounts.id as accountId, accounts.Name as accountName, accounts.year as accountOpeningYear, accounts.Code as accountCode, accounts.AnualPrinciple as accountAnualPrinciple, members.id as memberId, members.Names as member, members.Code as memberCode, transactions.Dr as Dr, transactions.Cr as Cr, transactions.event_id as event_id')
             ->orderBy('txnDate', 'ASC')
             ->get();
         return MemberAccountDetailsResource::collection($memberAccountDetails);

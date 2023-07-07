@@ -56,34 +56,33 @@ export default function MemberAccounts() {
                             <th className="py-1 px-6 text-right">Balance</th>
                         </tr>
                     </thead>
-                    {loading &&
-                        <tbody>
+                    <tbody>
+                        {loading ?
                             <tr>
                                 <td colSpan="5" className="text-center">
                                     Loading ...
                                 </td>
-                            </tr>
-                        </tbody>
-                    }
-                    {!loading &&
-                        <tbody>
-                            {memberAccounts && memberAccounts.map(account => (
-                                <tr className="border-b border-gray-400" key={account.accountId}>
-                                    <td className="py-0 px-6 text-left">
-                                        <Link to={`/members/memberaccountdetails/${account.memberId}/${account.accountId}`}>{account.accountName}</Link>
+                            </tr> :
+                            (memberAccounts ?
+                                memberAccounts.map(account => (
+                                    <tr className="border-b border-gray-400" key={account.accountId}>
+                                        <td className="py-0 px-6 text-left">
+                                            <Link to={`/members/memberaccountdetails/${account.memberId}/${account.accountId}`}>{account.accountName}</Link>
+                                        </td>
+                                        <td className="py-0 px-6 text-left">{account.Folio}</td>
+                                        <td className="py-0 px-6 text-right">{CurrencyFormat(account.accountAnualPrinciple)}</td>
+                                        <td className="py-0 px-6 text-right">{CurrencyFormat(account.totalAmountPaid)}</td>
+                                        <td className="py-0 px-6 text-right">{CurrencyFormat(account.accountBalance)}</td>
+                                    </tr>
+                                )) :
+                                <tr>
+                                    <td colspan="5" className="text-red-500 text-center">
+                                        No record in the database!!!
                                     </td>
-                                    <td className="py-0 px-6 text-left">{'F' + account.accountOpeningYear + '-' + account.memberCode + '-' + account.accountCode}</td>
-                                    <td className="py-0 px-6 text-right">{CurrencyFormat(account.accountAnualPrinciple)}</td>
-                                    <td className="py-0 px-6 text-right">{CurrencyFormat(account.totalAmountPaid)}</td>
-                                    <td className="py-0 px-6 text-right">{CurrencyFormat(account.accountAnualPrinciple - account.totalAmountPaid)}</td>
                                 </tr>
-                            ))}
-                            {!memberAccounts &&
-                                <tbody>
-                                    < tr ><td colspan="5" className="text-red-500 text-center">No record in the database!!!</td></tr >
-                                </tbody>
-                            }
-                        </tbody>}
+                            )
+                        }
+                    </tbody>
                 </table>
             </div>
 

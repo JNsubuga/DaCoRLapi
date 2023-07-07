@@ -59,44 +59,46 @@ export default function Members() {
                 </TButton>
             )}>
             <div className="max-w-full grid lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-1">
-                {loading &&
+                {loading ?
                     <div className="mx-auto h-10 text-center bg-slate-200 space-x-2">
                         Loading ...
-                    </div>
-                }
-                {!loading &&
-                    members.map(member => (
-                        <div className="rounded-xl border border-green-600 p-2 shadow-lg m-1" key={member.id}>
-                            <div className="flex">
-                                <h1 className="w-3/4 border-b-2 border-gray-500 font-bold capitalize">
-                                    <Link to={`/members/membertransactiondetails/${member.id}`}>{member.Names}</Link>
+                    </div> :
+                    members ?
+                        members.map(member => (
+                            <div className="rounded-xl border border-green-600 p-2 shadow-lg m-1" key={member.id}>
+                                <div className="flex">
+                                    <h1 className="w-3/4 border-b-2 border-gray-500 font-bold capitalize">
+                                        <Link to={`/members/membertransactiondetails/${member.id}`}>{member.Names}</Link>
 
-                                </h1>
-                                <span className="w-1/4 border-b-2 border-gray-500 font-bold capitalize text-blue-500 bg-slate-300 m-px rounded text-center px-2 mx-auto">
-                                    <Link to={`/members/memberaccounts/${member.id}`}>Acounts</Link>
-                                </span>
-                            </div>
-
-                            <div className="mt-4">
-                                <div className="flex relative">
-                                    <p className="absolute left-0">Member's Code:</p> <p className="absolute right-0 text-green-700 font-extrabold">{member.Code}</p>
+                                    </h1>
+                                    <span className="w-1/4 border-b-2 border-gray-500 font-bold capitalize text-blue-500 bg-slate-300 m-px rounded text-center px-1 mx-auto">
+                                        <Link to={`/members/memberaccounts/${member.id}`}>Acounts</Link>
+                                    </span>
                                 </div>
-                                <div className="flex relative mt-5">
-                                    <p className="absolute left-0">Member's Contacts:</p> <p className="absolute right-0">{member.Contacts}</p>
+
+                                <div className="mt-4">
+                                    <div className="flex relative">
+                                        <p className="absolute left-0">Member's Code:</p> <p className="absolute right-0 text-green-700 font-extrabold">{member.Code}</p>
+                                    </div>
+                                    <div className="flex relative mt-5">
+                                        <p className="absolute left-0">Member's Contacts:</p> <p className="absolute right-0">{member.Contacts}</p>
+                                    </div>
+                                </div>
+
+                                <div className="flex relative mt-6 items-center justify-between">
+                                    <TButton color="orange" to={'/members/' + member.id + '/edit'}>
+                                        <PencilIcon className="h-6 w-6 mr-1" />
+                                        Edit
+                                    </TButton>
+                                    <TButton color="red" onClick={() => handleDelete(member)}>
+                                        <TrashIcon className="h-6 w-6 mx-auto" />
+                                    </TButton>
                                 </div>
                             </div>
-
-                            <div className="flex relative mt-6 items-center justify-between">
-                                <TButton color="orange" to={'/members/' + member.id + '/edit'}>
-                                    <PencilIcon className="h-6 w-6 mr-1" />
-                                    Edit
-                                </TButton>
-                                <TButton color="red" onClick={() => handleDelete(member)}>
-                                    <TrashIcon className="h-6 w-6 mx-auto" />
-                                </TButton>
-                            </div>
+                        )) :
+                        <div className="text-red-500 text-center">
+                            No record in the database!!!
                         </div>
-                    ))
                 }
             </div>
         </PageComponent>

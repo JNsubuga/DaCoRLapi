@@ -25,7 +25,7 @@ export default function Transactions() {
             await axiosClient.get('/transactions')
                 .then(({ data }) => {
                     setLoading(false)
-                    console.log(data.data)
+                    // console.log(data.data)
                     setTransactions(data.data)
                 })
                 .catch(() => {
@@ -61,17 +61,14 @@ export default function Transactions() {
                             {/* <th className="py-1 px-6">Action</th> */}
                         </tr>
                     </thead>
-                    {loading &&
-                        <tbody>
+                    <tbody>
+                        {loading ?
                             <tr>
                                 <td colSpan="5" className="text-center">
                                     Loading ...
                                 </td>
-                            </tr>
-                        </tbody>}
-                    {!loading &&
-                        <tbody>
-                            {transactions &&
+                            </tr> :
+                            (transactions ?
                                 transactions.map(transaction => (
                                     <tr className="border-b border-gray-400" key={transaction.id}>
                                         <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
@@ -90,15 +87,15 @@ export default function Transactions() {
                                             </>
                                         }
                                     </tr >
-                                ))
-                            }
-                        </tbody>
-                    }
-                    {!transactions &&
-                        <tbody>
-                            < tr ><td colspan="5" className="text-red-500 text-center">No record in the database!!!</td></tr >
-                        </tbody>
-                    }
+                                )) :
+                                <tr>
+                                    <td colspan="5" className="text-red-500 text-center">
+                                        No record in the database!!!
+                                    </td>
+                                </tr>
+                            )
+                        }
+                    </tbody>
                 </table >
             </div >
         </PageComponent >

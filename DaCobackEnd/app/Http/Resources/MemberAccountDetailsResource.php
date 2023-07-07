@@ -16,18 +16,33 @@ class MemberAccountDetailsResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            // 'txnId' => $this->txnId,
+            // 'txnDate' => $this->txnDate,
+            // 'accountId' => $this->accountId,
+            // 'accountName' => $this->accountName,
+            // 'accountOpeningYear' => $this->accountOpeningYear,
+            // 'accountCode' => $this->accountCode,
+            // 'accountAnualPrinciple' => $this->accountAnualPrinciple,
+            // 'memberId' => $this->memberId,
+            // 'member' => $this->member,
+            // 'memberCode' => $this->memberCode,
+            // 'Dr' => $this->Dr,
+            // 'Cr' => $this->Cr
+
+            'accountName' => $this->accountName,
+            'member' => $this->member,
+            'accountOpeningYear' => $this->accountOpeningYear,
             'txnId' => $this->txnId,
             'txnDate' => $this->txnDate,
-            'accountId' => $this->accountId,
-            'accountName' => $this->accountName,
-            'accountOpeningYear' => $this->accountOpeningYear,
-            'accountCode' => $this->accountCode,
-            'accountAnualPrinciple' => $this->accountAnualPrinciple,
-            'memberId' => $this->memberId,
-            'member' => $this->member,
-            'memberCode' => $this->memberCode,
-            'Dr' => $this->Dr,
-            'Cr' => $this->Cr
+            'Folio' => 'F' . $this->accountOpeningYear . '-' . $this->memberCode . '-' . $this->accountCode,
+            'event' => $this->event_id,
+            'Amount' => $this->Dr
+
+            // 'accountId' => $this->accountId,
+            // 'accountAnualPrinciple' => $this->accountAnualPrinciple,
+            // 'memberId' => $this->memberId,
+            // 'Dr' => ,
+            // 'Cr' => $this->Cr
         ];
     }
 }

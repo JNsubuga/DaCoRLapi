@@ -34,7 +34,7 @@ export default function MemberTransactionDetails() {
         <PageComponent
             heading={
                 <div className="font-semibold capitalize text-green-700">
-                    {member + '\'s Trasaction Details'}
+                    {member + '\'s Transaction Details'}
                 </div>
             }
         >
@@ -50,35 +50,41 @@ export default function MemberTransactionDetails() {
                         {/* <th className="py-1 px-6">Action</th> */}
                     </tr>
                 </thead>
-                {loading && <tbody>
-                    <tr>
-                        <td colSpan="5" className="text-center">
-                            Loading ...
-                        </td>
-                    </tr>
-                </tbody>
-                }
-                {!loading &&
-                    <tbody>
-                        {
-                            memberTransactionDetails &&
+                <tbody>
+                    {loading ?
+                        <tr>
+                            <td colSpan="5" className="text-center">
+                                Loading ...
+                            </td>
+                        </tr> :
+                        (memberTransactionDetails ?
                             memberTransactionDetails.map(transaction => (
                                 <tr key={transaction.txnId} className="border-b border-gray-400">
                                     <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
                                     <td className="py-0 px-6">{transaction.accountName}</td>
-                                    <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td>
-                                    <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Cr)}</td>
-                                    <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Dr)}</td>
+                                    <td className="py-0 px-6 text-left">{transaction.Folio}</td>
+                                    {transaction.event == 1 &&
+                                        <>
+                                            <td className="py-0 px-6 text-right">{CurrencyFormat(0)}</td>
+                                            <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Amount)}</td>
+                                        </>
+                                    }
+                                    {transaction.event == 2 &&
+                                        <>
+                                            <td className="py-0 px-6 text-right">{CurrencyFormat(transaction.Amount)}</td>
+                                            <td className="py-0 px-6 text-right">{CurrencyFormat(0)}</td>
+                                        </>
+                                    }
                                 </tr>
-                            ))
-                        }
-                    </tbody>
-                }
-                {!memberTransactionDetails &&
-                    <tbody>
-                        < tr ><td colspan="5" className="text-red-500 text-center">No record in the database!!!</td></tr >
-                    </tbody>
-                }
+                            )) :
+                            <tr>
+                                <td colspan="5" className="text-red-500 text-center">
+                                    No record in the database!!!
+                                </td>
+                            </tr>
+                        )
+                    }
+                </tbody>
             </table>
 
         </PageComponent>

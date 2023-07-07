@@ -16,18 +16,24 @@ class MemberAccountsResource extends JsonResource
     {
         // return parent::toArray($request);
         return [
+            // 'accountId' => $this->accountId,
+            // 'accountName' => $this->accountName,
+            // 'accountOpeningYear' => $this->accountOpeningYear,
+            // 'accountCode' => $this->accountCode,
+            // 'accountAnualPrinciple' => $this->accountAnualPrinciple,
+            // 'memberId' => $this->memberId,
+            // 'member' => $this->member,
+            // 'memberCode' => $this->memberCode,
+            // 'totalAmountPaid' => $this->totalAmountPaid
+
+
+            'member' => $this->member,
+            'memberId' => $this->memberId,
             'accountId' => $this->accountId,
             'accountName' => $this->accountName,
-            'accountOpeningYear' => $this->accountOpeningYear,
-            'accountCode' => $this->accountCode,
-            'accountAnualPrinciple' => $this->accountAnualPrinciple,
-            'memberId' => $this->memberId,
-            'member' => $this->member,
-            'memberCode' => $this->memberCode,
-            'totalAmountPaid' => $this->totalAmountPaid
-
-
-            // 'member' => $this->member,
+            'Folio' => 'F' . $this->accountOpeningYear . '-' . $this->memberCode . '-' . $this->accountCode,
+            'totalAmountPaid' => $this->totalAmountPaid,
+            'accountBalance' => $this->accountAnualPrinciple - $this->totalAmountPaid
             // 'AnualPrinciple' => $this->AnualPrinciple,
             // 'totalAmountPaid' => $this->totalAmountPaid,
             // 'Name' => $this->Name,
