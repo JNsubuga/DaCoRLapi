@@ -28,6 +28,7 @@ class AccountDetailsResource extends JsonResource
 
             'accountName' => $this->accountName,
             'memberId' => $this->memberId,
+            'accountId' => $this->accountId,
             'member' => $this->member,
             'Folio' => 'F' . $this->accountOpeningYear . '-' . $this->memberCode . '-' . $this->accountCode,
             'accountAnualPrinciple' => $this->accountAnualPrinciple,

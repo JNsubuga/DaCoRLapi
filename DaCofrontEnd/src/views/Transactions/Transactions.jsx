@@ -4,13 +4,25 @@ import TButton from "../../Components/Core/TButton";
 import { useEffect, useState } from "react";
 import axiosClient from "../../axiosClient";
 import { CurrencyFormat, DateFormat } from "../../Components/Core/Locale";
+import SearchForm from "../../Components/Core/SearchForm";
+import TransactionsTr from "./TransactionsTr";
 
 export default function Transactions() {
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(false)
+    // const [results, setResults] = useState([])
+    const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
         getTransactions()
+            .then(jsonData => {
+                setTransactions(jsonData)
+                return jsonData
+            })
+            .then(jsonData => {
+                setSearchResults(jsonData)
+            })
+            .catch(() => { })
     }, [])
 
     const handleDelete = (async (transaction) => {
@@ -22,19 +34,25 @@ export default function Transactions() {
     const getTransactions = (async () => {
         setLoading(true)
         try {
-            await axiosClient.get('/transactions')
-                .then(({ data }) => {
-                    setLoading(false)
-                    // console.log(data.data)
-                    setTransactions(data.data)
-                })
-                .catch(() => {
-                    setLoading(false)
-                })
+            const transactionz = await axiosClient.get('/transactions')
+            // .then(({ data }) => {
+            //     setLoading(false)
+            //     // console.log(data.data)
+            //     setTransactions(data.data)
+            // })
+            // .catch(() => {
+            //     setLoading(false)
+            // })
+            return transactionz.data.data
         } catch (err) {
 
         }
     })
+
+    /**
+     * Search form
+     */
+
 
     return (
         <PageComponent
@@ -50,6 +68,7 @@ export default function Transactions() {
                     Register User
                 </TButton>}
         >
+            <SearchForm transactions={transactions} setSearchResults={setSearchResults} />
             <div>
                 <table className="w-full">
                     <thead>
@@ -61,8 +80,9 @@ export default function Transactions() {
                             {/* <th className="py-1 px-6">Action</th> */}
                         </tr>
                     </thead>
-                    <tbody>
-                        {loading ?
+                    {/* <tbody> */}
+                    <TransactionsTr searchResults={searchResults} />
+                    {/* {loading ?
                             <tr>
                                 <td colSpan="5" className="text-center">
                                     Loading ...
@@ -72,7 +92,6 @@ export default function Transactions() {
                                 transactions.map(transaction => (
                                     <tr className="border-b border-gray-400" key={transaction.id}>
                                         <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
-                                        {/* <td className="py-0 px-6 text-left">{'F' + transaction.accountOpeningYear + '-' + transaction.memberCode + '-' + transaction.accountCode}</td> */}
                                         <td className="py-0 px-6 text-left">{transaction.Folio}</td>
                                         {transaction.event == 1 &&
                                             <>
@@ -94,8 +113,8 @@ export default function Transactions() {
                                     </td>
                                 </tr>
                             )
-                        }
-                    </tbody>
+                        } */}
+                    {/* </tbody> */}
                 </table >
             </div >
         </PageComponent >

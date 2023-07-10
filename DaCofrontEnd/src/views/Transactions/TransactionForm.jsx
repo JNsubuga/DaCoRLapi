@@ -113,13 +113,13 @@ export default function TransactionForm() {
         //     </TButton>
         // )}
         >
-            {errors &&
+            {/* {errors &&
                 <div>
                     {Object.keys(errors).map(key => (
                         <p key={key}>{errors[key][0]}</p>
                     ))}
                 </div>
-            }
+            } */}
 
             {loading && (
                 <div>Loading ...</div>

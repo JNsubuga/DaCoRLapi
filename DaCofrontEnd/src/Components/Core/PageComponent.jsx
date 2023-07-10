@@ -9,17 +9,9 @@ export default function PageComponent({ heading, buttonz = '', children }) {
                 </div>
             </header>
             <main>
-                {/* <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8"> */}
-                {/* <div className="flex">
-                    <div className="w-1/5 bg-slate-900 max-h-full text-slate-400">
-                        Side Bar
-                    </div> */}
                 <div className="mx-auto py-6 sm:px-3 lg:px-4">
-                    {/* <div className="w-4/5 py-6 sm:px-3 lg:px-4"> */}
                     {children}
                 </div>
-                {/* </div> */}
-
             </main >
         </>
     )
