@@ -7,9 +7,10 @@ export default function SearchForm({ transactions, setSearchResults }) {
         ev.preventDefault()
         if (!searchs) return setSearchResults(transactions)
         const searchArray = transactions.filter(transaction =>
-            transaction.txnDate.include(searchs) ||
-            transaction.Folio.include(searchs) ||
-            transaction.Amount.include(searchs)
+            transaction.txnDate.includes(searchs) ||
+            transaction.Folio.includes(searchs) ||
+            transaction.Amount.includes(searchs)
+            // console.log(transaction)
         )
         setSearchResults(searchArray)
         // console.log(searchs)
