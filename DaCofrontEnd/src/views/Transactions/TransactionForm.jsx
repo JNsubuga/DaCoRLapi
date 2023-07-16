@@ -73,27 +73,28 @@ export default function TransactionForm() {
     const handleSubmit = async (ev) => {
         ev.preventDefault()
         if (transaction.id) {
-            try {
-                await axiosClient.put(`/transactions/${transaction.id}`, transaction)
-                    .then(() => {
-                        setNotification("Transaction was successfully updated!!")
-                        // navigate('/transactions')
-                    })
-            } catch (err) {
-                console.log(err.response)
-            }
+            // try {
+            //     await axiosClient.put(`/transactions/${transaction.id}`, transaction)
+            //         .then(() => {
+            //             setNotification("Transaction was successfully updated!!")
+            //             // navigate('/transactions')
+            //         })
+            // } catch (err) {
+            //     console.log(err.response)
+            // }
         } else {
             await axiosClient.post('/transactions', transaction)
-                .then(({ data }) => {
-                    // console.log(data)
+                .then(() => {
                     setNotification("Transaction was successfully Stored!!")
-                    navigate('/transactions')
+                    // navigate('/transactions')
                 })
-                .catch((err) => {
+                .catch(err => {
                     const response = err.response
-                    if (response && response.status === 422) {
-                        setErrors(response.data.errors)
-                    }
+                    console.log(err)
+                    // if (response && response.status === 422) {
+                    //     console.log(err.response)
+                    //     // setErrors(response)
+                    // }
                 })
         }
         // console.log(transaction)

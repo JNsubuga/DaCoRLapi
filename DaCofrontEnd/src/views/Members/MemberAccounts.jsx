@@ -5,31 +5,52 @@ import axiosClient from "../../axiosClient";
 import { Link, useParams } from "react-router-dom";
 import { CurrencyFormat } from "../../Components/Core/Locale";
 import TButton from "../../Components/Core/TButton";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import MemberAccountspdf from "./PDFs/MemberAccountspdf";
 
 export default function MemberAccounts() {
     const { id } = useParams()
     const [memberAccounts, setMemberAccounts] = useState([])
     const [member, setMember] = useState(null)
     const [loading, setLoading] = useState(false)
-    // const { setNotification } = useStateContext()
+    const [searchs, setSearchs] = useState("")
+    const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
         getMemberAccounts()
+            .then(jsonData => {
+                setLoading(false)
+                setMember(jsonData[0].member)
+                setMemberAccounts(jsonData)
+                return jsonData
+            })
+            .then(jsonData => {
+                setSearchResults(jsonData)
+            })
+            .catch(() => {
+                setLoading(false)
+            })
     }, [])
     const getMemberAccounts = async () => {
-        await axiosClient.get(`/members/memberAccounts/${id}`)
-            .then(({ data }) => {
-                // console.log(data.data)
-                setMember(data.data[0].member)
-                setMemberAccounts(data.data)
-                setLoading(false)
-            })
-            .catch((err) => {
-                console.log(err)
-                setLoading(false)
-            })
-
+        const memberAccountc = await axiosClient.get(`/members/memberAccounts/${id}`)
+        return memberAccountc.data.data
     }
+
+    /**
+        * Search form
+        */
+    const handleSearch = (ev) => {
+        ev.preventDefault()
+        if (!searchs) return setSearchResults(memberAccounts)
+        const searchArray = memberAccounts.filter(memberAccount =>
+            memberAccount.accountName.includes(searchs) ||
+            memberAccount.Folio.includes(searchs)
+
+        )
+        setSearchResults(searchArray)
+        // console.log(searchs)
+    }
+
     return (
         <PageComponent
             heading={member &&
@@ -37,13 +58,25 @@ export default function MemberAccounts() {
                     {member + '\'s accounts'}
                 </div>
             }
+            searchs={searchs}
+            setSearchs={setSearchs}
+            handleSearch={handleSearch}
             buttonz={(
                 <TButton to="/members" back>
                     Members List
                 </TButton>
             )}
         >
-
+            <PDFDownloadLink
+                document={
+                    <MemberAccountspdf
+                        memberAccountsPdf={searchResults}
+                        member={member}
+                    />
+                }
+                fileName="MemberAccuontsPDF">
+                {({ loading }) => (loading ? <button className="rounded-md bg-slate-300 shadow-lg px-2 py-1">Document Loading ...</button> : <button className="rounded-md bg-slate-300 shadow-lg px-2 py-1">Download PDF</button>)}
+            </PDFDownloadLink>
 
             <div>
                 <table className="table-auto w-full mt-2">
@@ -63,8 +96,8 @@ export default function MemberAccounts() {
                                     Loading ...
                                 </td>
                             </tr> :
-                            (memberAccounts ?
-                                memberAccounts.map(account => (
+                            (searchResults ?
+                                searchResults.map(account => (
                                     <tr className="border-b border-gray-400" key={account.accountId}>
                                         <td className="py-0 px-6 text-left">
                                             <Link to={`/members/memberaccountdetails/${account.memberId}/${account.accountId}`}>{account.accountName}</Link>

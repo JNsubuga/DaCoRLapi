@@ -9,30 +9,51 @@ export default function AccountDetails() {
     const [account, setAccount] = useState(null)
     const [members, setMembers] = useState([])
     const [loading, setLoading] = useState(false)
+    const [searchs, setSearchs] = useState("")
+    const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
         getMembers()
-    }, [])
-
-    const getMembers = async () => {
-        setLoading(true)
-        await axiosClient.get(`/accounts/accountMembers/${id}`)
-            .then(({ data }) => {
+            .then(jsonData => {
                 setLoading(false)
-                // console.log(data.data)
-                setAccount(data.data[0].accountName)
-                setMembers(data.data)
+                setAccount(jsonData[0].accountName)
+                setMembers(jsonData)
+                return jsonData
+            })
+            .then(jsonData => {
+                setSearchResults(jsonData)
             })
             .catch(() => {
                 setLoading(false)
             })
-    }
+    }, [])
 
+    const getMembers = async () => {
+        setLoading(true)
+        const memberz = await axiosClient.get(`/accounts/accountMembers/${id}`)
+        return memberz.data.data
+    }
+    /**
+    * Search form
+    */
+    const handleSearch = (ev) => {
+        ev.preventDefault()
+        if (!searchs) return setSearchResults(members)
+        const searchArray = members.filter(member =>
+            member.member.includes(searchs) ||
+            member.Folio.includes(searchs)
+        )
+        setSearchResults(searchArray)
+        // console.log(searchs)
+    }
     return (
         <PageComponent
             heading={
                 account + ' Details'
             }
+            searchs={searchs}
+            setSearchs={setSearchs}
+            handleSearch={handleSearch}
         >
             <table className="w-full">
                 <thead>
@@ -51,8 +72,8 @@ export default function AccountDetails() {
                                 Loading ...
                             </td>
                         </tr> :
-                        (members ?
-                            members.map(member => (
+                        (searchResults ?
+                            searchResults.map(member => (
                                 <tr className="border-b border-gray-400" key={member.memberId}>
                                     <td className="py-0 px-2 text-left">
                                         <Link to={`/members/memberaccountdetails/${member.memberId}/${member.accountId}`}>

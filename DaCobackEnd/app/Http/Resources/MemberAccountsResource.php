@@ -32,6 +32,7 @@ class MemberAccountsResource extends JsonResource
             'accountId' => $this->accountId,
             'accountName' => $this->accountName,
             'Folio' => 'F' . $this->accountOpeningYear . '-' . $this->memberCode . '-' . $this->accountCode,
+            'accountAnualPrinciple' => $this->accountAnualPrinciple,
             'totalAmountPaid' => $this->totalAmountPaid,
             'accountBalance' => $this->accountAnualPrinciple - $this->totalAmountPaid
             // 'AnualPrinciple' => $this->AnualPrinciple,

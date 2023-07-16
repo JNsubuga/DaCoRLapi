@@ -10,25 +10,45 @@ export default function MemberTransactionDetails() {
     const [loading, setLoading] = useState(false)
     const [memberTransactionDetails, setMemberTransactionDetails] = useState([])
     const [member, setMember] = useState(null)
+    const [searchs, setSearchs] = useState("")
+    const [searchResults, setSearchResults] = useState([])
 
     useEffect(() => {
         getMemberTransactionDetails()
-    }, [])
-
-    const getMemberTransactionDetails = async () => {
-        setLoading(true)
-        await axiosClient.get(`/members/memberTransactionDetails/${id}`)
-            .then(({ data }) => {
+            .then(jsonData => {
                 setLoading(false)
-                setMember(data.data[0].member)
-                setMemberTransactionDetails(data.data)
+                setMember(jsonData[0].member)
+                setMemberTransactionDetails(jsonData)
+                return jsonData
+            })
+            .then(jsonData => {
+                setSearchResults(jsonData)
             })
             .catch(() => {
                 setLoading(false)
             })
+    }, [])
+
+    const getMemberTransactionDetails = async () => {
+        setLoading(true)
+        const memberTransactionDetailz = await axiosClient.get(`/members/memberTransactionDetails/${id}`)
+        return memberTransactionDetailz.data.data
     }
 
-
+    /**
+        * Search form
+        */
+    const handleSearch = (ev) => {
+        ev.preventDefault()
+        if (!searchs) return setSearchResults(memberTransactionDetails)
+        const searchArray = memberTransactionDetails.filter(memberTransactionDetail =>
+            memberTransactionDetail.txnDate.includes(searchs) ||
+            memberTransactionDetail.accountName.includes(searchs) ||
+            memberTransactionDetail.Folio.includes(searchs)
+        )
+        setSearchResults(searchArray)
+        // console.log(searchs)
+    }
     // console.log(memberTransactionDetails[0].member)
     return (
         <PageComponent
@@ -37,6 +57,9 @@ export default function MemberTransactionDetails() {
                     {member + '\'s Transaction Details'}
                 </div>
             }
+            searchs={searchs}
+            setSearchs={setSearchs}
+            handleSearch={handleSearch}
         >
 
             <table className="table-auto w-full">
@@ -57,8 +80,8 @@ export default function MemberTransactionDetails() {
                                 Loading ...
                             </td>
                         </tr> :
-                        (memberTransactionDetails ?
-                            memberTransactionDetails.map(transaction => (
+                        (searchResults ?
+                            searchResults.map(transaction => (
                                 <tr key={transaction.txnId} className="border-b border-gray-400">
                                     <td className="py-0 px-6">{DateFormat(transaction.txnDate)}</td>
                                     <td className="py-0 px-6">{transaction.accountName}</td>

@@ -10,9 +10,23 @@ export default function Members() {
     const [members, setMembers] = useState([])
     const [loading, setLoading] = useState(false)
     const { setNotification } = useStateContext()
+    const [searchs, setSearchs] = useState("")
+    const [searchResults, setSearchResults] = useState([])
+
 
     useEffect(() => {
         getMembers()
+            .then(jsonData => {
+                setLoading(false)
+                setMembers(jsonData)
+                return jsonData
+            })
+            .then(jsonData => {
+                setSearchResults(jsonData)
+            })
+            .catch(err => {
+
+            })
     }, [])
 
     const handleDelete = async (member) => {
@@ -36,15 +50,24 @@ export default function Members() {
 
     const getMembers = (async () => {
         setLoading(true)
-        await axiosClient.get('/members')
-            .then(({ data }) => {
-                setLoading(false)
-                setMembers(data.data)
-            })
-            .catch(() => {
-                setLoading(false)
-            })
+        const memberz = await axiosClient.get('/members')
+        return memberz.data.data
     })
+
+    /**
+    * Search form
+    */
+    const handleSearch = (ev) => {
+        ev.preventDefault()
+        if (!searchs) return setSearchResults(members)
+        const searchArray = members.filter(member =>
+            member.Names.includes(searchs) ||
+            member.Code.includes(searchs) ||
+            member.Contacts.includes(searchs)
+        )
+        setSearchResults(searchArray)
+        // console.log(searchs)
+    }
     return (
         <PageComponent
             heading={
@@ -52,6 +75,10 @@ export default function Members() {
                     Members List
                 </div>
             }
+            searchs={searchs}
+            setSearchs={setSearchs}
+            handleSearch={handleSearch}
+
             buttonz={(
                 <TButton color="green" to="/members/create">
                     <PlusCircleIcon className="h-6 w-6 mr-1" />
@@ -63,8 +90,8 @@ export default function Members() {
                     <div className="mx-auto h-10 text-center bg-slate-200 space-x-2">
                         Loading ...
                     </div> :
-                    members ?
-                        members.map(member => (
+                    searchResults ?
+                        searchResults.map(member => (
                             <div className="rounded-xl border border-green-600 p-2 shadow-lg m-1" key={member.id}>
                                 <div className="flex">
                                     <h1 className="w-3/4 border-b-2 border-gray-500 font-bold capitalize">
