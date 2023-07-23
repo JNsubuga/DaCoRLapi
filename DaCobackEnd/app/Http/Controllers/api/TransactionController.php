@@ -29,8 +29,6 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request)
     {
         $data = $request->validated();
-        // return response($data['event_id']);
-        // return response(new TransactionResource($data['event_id']));
         switch ($data['event_id']) {
             case 1:
                 $selectedMember = Member::where('id', $data['member_id'])->first();

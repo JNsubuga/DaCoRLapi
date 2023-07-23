@@ -83,19 +83,21 @@ export default function TransactionForm() {
             //     console.log(err.response)
             // }
         } else {
-            await axiosClient.post('/transactions', transaction)
-                .then(() => {
-                    setNotification("Transaction was successfully Stored!!")
-                    // navigate('/transactions')
-                })
-                .catch(err => {
-                    const response = err.response
-                    console.log(err)
-                    // if (response && response.status === 422) {
-                    //     console.log(err.response)
-                    //     // setErrors(response)
-                    // }
-                })
+            const res = await axiosClient.post('/transactions', transaction)
+            // .then(({ data }) => {
+            //     console.log(data.data.response)
+            //     setNotification("Transaction was successfully Stored!!")
+            //     // navigate('/transactions')
+            // })
+            // .catch(err => {
+            //     const response = err.response
+            //     console.log(err)
+            // if (response && response.status === 422) {
+            //     console.log(err.response)
+            //     // setErrors(response)
+            // }
+            // })
+            return console.log(res.data)
         }
         // console.log(transaction)
     }
