@@ -3,6 +3,8 @@ import axiosClient from "../../axiosClient"
 import { useParams } from "react-router-dom"
 import PageComponent from "../../Components/Core/PageComponent"
 import { CurrencyFormat, DateFormat } from "../../Components/Core/Locale"
+import MemberTransactionspdf from "./PDFs/MemberTransactionspdf"
+import { PDFDownloadLink } from "@react-pdf/renderer"
 
 export default function MemberTransactionDetails() {
     const { id } = useParams()
@@ -61,6 +63,16 @@ export default function MemberTransactionDetails() {
             setSearchs={setSearchs}
             handleSearch={handleSearch}
         >
+            <PDFDownloadLink
+                document={
+                    <MemberTransactionspdf
+                        memberTransactionsPdf={searchResults}
+                        member={member}
+                    />
+                }
+                fileName="MemberTransactionsPDF">
+                {({ loading }) => (loading ? <button className="rounded-md bg-slate-300 shadow-lg px-2 py-1">Document Loading ...</button> : <button className="rounded-md bg-slate-300 shadow-lg px-2 py-1">Download PDF</button>)}
+            </PDFDownloadLink>
 
             <table className="table-auto w-full">
                 <thead>

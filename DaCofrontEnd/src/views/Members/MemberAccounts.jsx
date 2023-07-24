@@ -50,7 +50,9 @@ export default function MemberAccounts() {
         setSearchResults(searchArray)
         // console.log(searchs)
     }
-
+    const totalBalance = 0
+    const totalPaid = 0
+    const totalPrinciple = 0
     return (
         <PageComponent
             heading={member &&
@@ -98,7 +100,13 @@ export default function MemberAccounts() {
                             </tr> :
                             (searchResults ?
                                 searchResults.map(account => (
-                                    <tr className="border-b border-gray-400" key={account.accountId}>
+                                    // {
+                                    //  <td>{totalPrinciple = totalPrinciple + account.accountAnualPrinciple}</td>
+                                    //  totalPaid = totalPaid + account.accountAmountPaid
+                                    //  totalBalance = totalBalance + account.accountBalance
+                                    // }
+
+                                    < tr className="border-b border-gray-400" key={account.accountId} >
                                         <td className="py-0 px-6 text-left">
                                             <Link to={`/members/memberaccountdetails/${account.memberId}/${account.accountId}`}>{account.accountName}</Link>
                                         </td>
@@ -120,6 +128,6 @@ export default function MemberAccounts() {
             </div>
 
 
-        </PageComponent>
+        </PageComponent >
     )
 }

@@ -27,14 +27,17 @@ class UserController extends Controller
      * 
      * @param  \App\Http\Requests\StoreUserRequest $request
      * @return \Illuminate\Http\Response
-     * 
      */
     public function store(StoreUserRequest $request)
     {
-        $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
-        $user = User::create($data);
-        return response(new UserResource($user), 201);
+        if ($request->validated()) {
+            $data = $request->validated();
+            $data['password'] = bcrypt($data['password']);
+            $user = User::create($data);
+            return response(new UserResource($user), 201);
+        } else {
+            return response("");
+        }
     }
 
     /**

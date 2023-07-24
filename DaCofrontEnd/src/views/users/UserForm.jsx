@@ -35,7 +35,7 @@ export default function UserForm() {
         }, [])
     }
 
-    const handleSubmit = (ev) => {
+    const handleSubmit = async (ev) => {
         ev.preventDefault()
         if (user.id) {
             axiosClient.put(`/users/${user.id}`, user)
@@ -50,18 +50,21 @@ export default function UserForm() {
                     }
                 })
         } else {
-            axiosClient.post(`/users`, user)
-                .then(() => {
-                    //TODO Show Notification
-                    setNotification("User was successfully Registered!!")
-                    navigate('/users')
-                })
-                .catch((err) => {
-                    const response = err.response
-                    if (response && response.status === 422) {
-                        setErrors(response.data.errors)
-                    }
-                })
+            const res = await axiosClient.post(`/users`, user)
+            // .then(() => {
+            //     //TODO Show Notification
+            //     setNotification("User was successfully Registered!!")
+            //     navigate('/users')
+            // })
+            // .catch((err) => {
+            //     const response = err.response
+            //     if (response && response.status === 422) {
+            //         console.log(response.data)
+            //         // setErrors(response.data.errors)
+            //     }
+            // })
+            console.log(res)
+            // return ;
         }
     }
 

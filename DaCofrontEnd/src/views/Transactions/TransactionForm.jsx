@@ -73,31 +73,36 @@ export default function TransactionForm() {
     const handleSubmit = async (ev) => {
         ev.preventDefault()
         if (transaction.id) {
-            // try {
-            //     await axiosClient.put(`/transactions/${transaction.id}`, transaction)
-            //         .then(() => {
-            //             setNotification("Transaction was successfully updated!!")
-            //             // navigate('/transactions')
-            //         })
-            // } catch (err) {
-            //     console.log(err.response)
-            // }
+            try {
+                await axiosClient.put(`/transactions/${transaction.id}`, transaction)
+                    .then(() => {
+                        setNotification("Transaction was successfully updated!!")
+                        // navigate('/transactions')
+                    })
+            } catch (err) {
+                if (err) {
+                    setErrors(err)
+                    console.log(errors)
+                }
+
+            }
         } else {
-            const res = await axiosClient.post('/transactions', transaction)
-            // .then(({ data }) => {
-            //     console.log(data.data.response)
-            //     setNotification("Transaction was successfully Stored!!")
-            //     // navigate('/transactions')
-            // })
-            // .catch(err => {
-            //     const response = err.response
-            //     console.log(err)
-            // if (response && response.status === 422) {
-            //     console.log(err.response)
-            //     // setErrors(response)
-            // }
-            // })
-            return console.log(res.data)
+            // const res = await axiosClient.post('/transactions', transaction)
+            await axiosClient.post('/transactions', transaction)
+                .then(({ data }) => {
+                    console.log(data.data.response)
+                    setNotification("Transaction was successfully Stored!!")
+                    // navigate('/transactions')
+                })
+                .catch(err => {
+                    const response = err.response
+                    console.log(err)
+                    if (response && response.status === 422) {
+                        console.log(err.Response)
+                        // setErrors(response)
+                    }
+                })
+            // return console.log(res.data)
         }
         // console.log(transaction)
     }
@@ -106,9 +111,9 @@ export default function TransactionForm() {
         <PageComponent
             heading="New Transaction"
         // heading={
-        //     // !transaction.id == null ?
-        //     <div>New Transaction</div>
-        //     // : <div>Update Transaction</div>
+        //     !transaction.id == null ?
+        //         <div>New Transaction</div>
+        //         : <div>Update Transaction</div>
         // }
         // buttonz={(
         //     <TButton to="/transactions" back>
@@ -116,13 +121,13 @@ export default function TransactionForm() {
         //     </TButton>
         // )}
         >
-            {/* {errors &&
+            {errors &&
                 <div>
                     {Object.keys(errors).map(key => (
                         <p key={key}>{errors[key][0]}</p>
                     ))}
                 </div>
-            } */}
+            }
 
             {loading && (
                 <div>Loading ...</div>

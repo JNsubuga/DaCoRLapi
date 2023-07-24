@@ -3,6 +3,8 @@ import PageComponent from "../../Components/Core/PageComponent";
 import axiosClient from "../../axiosClient";
 import { Link, useParams } from "react-router-dom";
 import { CurrencyFormat } from "../../Components/Core/Locale";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Accountpdf from "./PDFs/Accountpdf";
 
 export default function AccountDetails() {
     const { id } = useParams()
@@ -55,6 +57,16 @@ export default function AccountDetails() {
             setSearchs={setSearchs}
             handleSearch={handleSearch}
         >
+            <PDFDownloadLink
+                document={
+                    <Accountpdf
+                        membersPdf={searchResults}
+                        account={account}
+                    />
+                }
+                fileName="AccountPDF">
+                {({ loading }) => (loading ? <button className="rounded-md bg-slate-300 shadow-lg px-2 py-1">Document Loading ...</button> : <button className="rounded-md bg-slate-300 shadow-lg px-2 py-1">Download PDF</button>)}
+            </PDFDownloadLink>
             <table className="w-full">
                 <thead>
                     <tr className="border-b-2 border-gray-600 font-bold capitalize">
