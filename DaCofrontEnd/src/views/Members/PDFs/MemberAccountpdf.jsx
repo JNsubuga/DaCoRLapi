@@ -1,32 +1,37 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 import { CurrencyFormat, DateFormat } from '../../../Components/Core/Locale'
 
-
 const style = StyleSheet.create({
     body: {
         padding: 25,
         paddingBottom: 65,
         paddingHorizontal: 15
     },
+
     header: {
-        fontSize: 12,
-        marginBottom: 20,
-        textAlign: 'center',
-        color: 'grey'
-    },
-    title: {
-        fontSize: 24,
+        marginBottom: 18,
         textAlign: 'center'
     },
+
+    title: {
+        fontSize: 18,
+        color: 'green',
+        fontWeight: 'extrabold',
+        textAlign: 'center',
+        textDecoration: 'underline',
+        textTransform: 'capitalize'
+    },
+
     text: {
         margin: 12,
         fontSize: 14,
         textAlign: 'justify',
         fontFamily: 'Times-Roman'
     },
+
     table: {
         display: "table",
-        width: "auto",
+        width: "100%",
         borderStyle: "solid",
         borderTop: 1,
         borderColor: 'gray',
@@ -37,11 +42,13 @@ const style = StyleSheet.create({
     tableRow: {
         margin: "auto",
         width: "100%",
-        flexDirection: "row"
+        flexDirection: "row",
+        fontWeight: 900
     },
 
     tableCol: {
-        width: "25%",
+        width: '25%',
+        alignContent: 'space-between',
         borderStyle: "solid",
         borderBottom: 1,
         borderColor: 'gray',
@@ -52,14 +59,14 @@ const style = StyleSheet.create({
 
     tableThCell: {
         fontSize: 12,
-        fontWeight: 900,
+        fontWeight: 'extrabold',
         marginLeft: 4,
         marginTop: 4
     },
 
     tableRightThCell: {
         fontSize: 12,
-        fontWeight: 900,
+        fontWeight: 'extrabold',
         textAlign: 'right',
         marginRight: 4,
         marginTop: 4
@@ -82,6 +89,7 @@ const style = StyleSheet.create({
         color: 'Red',
         textAlign: 'center'
     },
+
     pageNumber: {
         position: 'absolute',
         fontSize: 12,
@@ -98,7 +106,9 @@ const MemberAccountpdf = ({ memberAccountPdf, member, account, accountYear }) =>
         <Document>
             <Page style={style.body}>
                 <Text style={style.header} fixed>
-                    {member + '\'s ' + account + ' for Financial Year ' + accountYear}
+                    <Text style={style.title}>
+                        {member + '\'s ' + account + ' for Financial Year ' + accountYear}
+                    </Text>
                 </Text>
                 <View style={style.table}>
                     <View>

@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { CurrencyFormat } from "../../Components/Core/Locale";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Accountpdf from "./PDFs/Accountpdf";
+import Acummulator from "../../Components/Core/Acummulator";
 
 export default function AccountDetails() {
     const { id } = useParams()
@@ -13,6 +14,7 @@ export default function AccountDetails() {
     const [loading, setLoading] = useState(false)
     const [searchs, setSearchs] = useState("")
     const [searchResults, setSearchResults] = useState([])
+    const [numbersToAcummulate, setNumbersToAcummulate] = useState({})
 
     useEffect(() => {
         getMembers()
@@ -24,6 +26,7 @@ export default function AccountDetails() {
             })
             .then(jsonData => {
                 setSearchResults(jsonData)
+                setNumbersToAcummulate(jsonData)
             })
             .catch(() => {
                 setLoading(false)
@@ -67,7 +70,7 @@ export default function AccountDetails() {
                 fileName="AccountPDF">
                 {({ loading }) => (loading ? <button className="rounded-md bg-slate-300 shadow-lg px-2 py-1">Document Loading ...</button> : <button className="rounded-md bg-slate-300 shadow-lg px-2 py-1">Download PDF</button>)}
             </PDFDownloadLink>
-            <table className="w-full">
+            <table className="table-auto w-full mt-2">
                 <thead>
                     <tr className="border-b-2 border-gray-600 font-bold capitalize">
                         <th className="py-1 px-2 text-left">Member</th>
@@ -102,8 +105,8 @@ export default function AccountDetails() {
                                 No record in the database!!!
                             </td>
                         )
-                        // }
                     }
+                    <Acummulator objectValuesToAcummulate={numbersToAcummulate} />
                 </tbody>
             </table>
         </PageComponent>

@@ -40,7 +40,6 @@ export default function AppLayout() {
             })
     }
 
-
     if (!token) {
         return <Navigate to='/login' />
     }

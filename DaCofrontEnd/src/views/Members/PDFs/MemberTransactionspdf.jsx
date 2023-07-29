@@ -7,22 +7,28 @@ const style = StyleSheet.create({
         paddingBottom: 65,
         paddingHorizontal: 15
     },
+
     header: {
-        fontSize: 12,
-        marginBottom: 20,
-        textAlign: 'center',
-        color: 'grey'
-    },
-    title: {
-        fontSize: 24,
+        marginBottom: 18,
         textAlign: 'center'
     },
+
+    title: {
+        fontSize: 18,
+        color: 'green',
+        fontWeight: 'extrabold',
+        textAlign: 'center',
+        textDecoration: 'underline',
+        textTransform: 'capitalize'
+    },
+
     text: {
         margin: 12,
         fontSize: 14,
         textAlign: 'justify',
         fontFamily: 'Times-Roman'
     },
+
     table: {
         display: "table",
         width: "100%",
@@ -36,7 +42,8 @@ const style = StyleSheet.create({
     tableRow: {
         margin: "auto",
         width: "100%",
-        flexDirection: "row"
+        flexDirection: "row",
+        fontWeight: 900
     },
 
     tableCol: {
@@ -82,6 +89,7 @@ const style = StyleSheet.create({
         color: 'Red',
         textAlign: 'center'
     },
+
     pageNumber: {
         position: 'absolute',
         fontSize: 12,
@@ -98,7 +106,9 @@ const MemberTransactionspdf = ({ memberTransactionsPdf, member }) => {
         <Document>
             <Page style={style.body}>
                 <Text style={style.header} fixed>
-                    {member + '\'s transactions'}
+                    <Text style={style.title}>
+                        {member + '\'s transactions'}
+                    </Text>
                 </Text>
                 <View style={style.table}>
                     <View>

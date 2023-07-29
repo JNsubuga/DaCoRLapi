@@ -1,5 +1,6 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer'
 import { CurrencyFormat } from '../../../Components/Core/Locale'
+import PdfAcummulator from '../../../Components/Core/PdfAcummulator'
 
 const style = StyleSheet.create({
     body: {
@@ -7,22 +8,28 @@ const style = StyleSheet.create({
         paddingBottom: 65,
         paddingHorizontal: 15
     },
+
     header: {
-        fontSize: 12,
-        marginBottom: 20,
-        textAlign: 'center',
-        color: 'grey'
-    },
-    title: {
-        fontSize: 24,
+        marginBottom: 18,
         textAlign: 'center'
     },
+
+    title: {
+        fontSize: 18,
+        color: 'green',
+        fontWeight: 'extrabold',
+        textAlign: 'center',
+        textDecoration: 'underline',
+        textTransform: 'capitalize'
+    },
+
     text: {
         margin: 12,
         fontSize: 14,
         textAlign: 'justify',
         fontFamily: 'Times-Roman'
     },
+
     table: {
         display: "table",
         width: "100%",
@@ -36,7 +43,8 @@ const style = StyleSheet.create({
     tableRow: {
         margin: "auto",
         width: "100%",
-        flexDirection: "row"
+        flexDirection: "row",
+        fontWeight: 900
     },
 
     tableCol: {
@@ -82,6 +90,7 @@ const style = StyleSheet.create({
         color: 'Red',
         textAlign: 'center'
     },
+
     pageNumber: {
         position: 'absolute',
         fontSize: 12,
@@ -98,7 +107,9 @@ const MemberAccountspdf = ({ memberAccountsPdf, member }) => {
         <Document>
             <Page style={style.body}>
                 <Text style={style.header} fixed>
-                    {member + '\'s accounts'}
+                    <Text style={style.title}>
+                        {member + '\'s accounts'}
+                    </Text>
                 </Text>
                 <View style={style.table}>
                     <View>
@@ -112,7 +123,7 @@ const MemberAccountspdf = ({ memberAccountsPdf, member }) => {
                         </View>
                     </View>
                     <View>
-                        {(memberAccountsPdf ?
+                        {memberAccountsPdf ?
                             memberAccountsPdf.map(account => (
                                 <View style={style.tableRow} key={account.accountId}>
                                     <View style={style.tableCol}><Text style={style.tableTdCell}>{account.accountName}</Text></View>
@@ -127,7 +138,8 @@ const MemberAccountspdf = ({ memberAccountsPdf, member }) => {
                                     No record in the database!!!
                                 </View>
                             </View>
-                        )}
+                        }
+                        <PdfAcummulator objectValuesToAcummulate={memberAccountsPdf} />
                     </View>
                 </View>
                 <Text
@@ -137,7 +149,6 @@ const MemberAccountspdf = ({ memberAccountsPdf, member }) => {
                 />
             </Page>
         </Document>
-
     )
 }
 
